@@ -6,5 +6,8 @@ class GLWidget : public QGLWidget
 public:
 	GLWidget(QWidget *parent = NULL);
 	~GLWidget();
+protected:
+	void initializeGL();
+	void paintGL();
 };
 

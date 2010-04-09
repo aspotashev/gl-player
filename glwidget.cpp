@@ -19,5 +19,7 @@ void GLWidget::initializeGL()
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	GLUquadricObj *quad = gluNewQuadric();
+	gluSphere(quad, 1.0, 100, 100);
 }
 

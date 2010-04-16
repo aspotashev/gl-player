@@ -8,6 +8,7 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow();
 
+	virtual void keyPressEvent(QKeyEvent * event);
 private:
 	GLWidget *glWidget;
 };

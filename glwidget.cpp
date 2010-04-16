@@ -2,6 +2,7 @@
 
 GLWidget::GLWidget(QWidget *parent)
 {
+	xRot = yRot = zRot = 0.0;
 }
 
 GLWidget::~GLWidget()
@@ -24,9 +25,22 @@ void GLWidget::paintGL()
 	GLUquadricObj *quad = gluNewQuadric();
 
 	glLoadIdentity();
+
+	glTranslated(0.0, 0.0, -10.0);
+	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+
 	glRotatef(50.0f, 1.0f, 1.0f, 1.0f);
 	glScalef(0.5f, 1.0f, 1.0f);
 	gluSphere(quad, 1.0, 100, 100);
+
+	glLoadIdentity();
+	glTranslated(0.0, 0.0, -5.0);
+
+//	glLineWidth(2.0);
+//	glRectd(-2.0, -2.0, 2.0, 2.0);
+//	glutWireCube(1.0);
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -34,9 +48,16 @@ void GLWidget::resizeGL(int width, int height)
 	int side = qMin(width, height);
 	glViewport((width - side) / 2, (height - side) / 2, side, side);
 
-//	glMatrixMode(GL_PROJECTION);
-//	glLoadIdentity();
-//	glOrtho(-0.5, +0.5, +0.5, -0.5, 4.0, 15.0);
-//	glMatrixMode(GL_MODELVIEW);
+
+
+
+	glMatrixMode(GL_PROJECTION);
+
+	glLoadIdentity();
+	gluPerspective(60, 1.0, 1.0, 100.0);
+
+//	glOrtho(-1.5, +1.5, +1.5, -1.5, 0.0, 15.0);
+
+	glMatrixMode(GL_MODELVIEW);
 }
 

@@ -10,5 +10,8 @@ protected:
 	void initializeGL();
 	void paintGL();
 	void resizeGL(int width, int height);
+
+private:
+	double xRot, yRot, zRot;
 };
 

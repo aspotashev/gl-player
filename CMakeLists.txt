@@ -14,5 +14,6 @@ add_executable (gl
 	main.cpp
 	${MOC_SOURCES})
 target_link_libraries(gl
-	${QT_LIBRARIES})
+	${QT_LIBRARIES}
+	glut)
 

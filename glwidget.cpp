@@ -17,6 +17,8 @@ void GLWidget::initializeGL()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+	glMaterialf(GL_FRONT, GL_DIFFUSE, 0.5);
 }
 
 void GLWidget::paintGL()
@@ -27,24 +29,24 @@ void GLWidget::paintGL()
 
 //-------------------
 	glLoadIdentity();
-	glTranslated(0.6, 0.0, 0.0);
 
 	glTranslated(0.0, 0.0, -10.0);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+	glTranslated(3, 0.0, 0.0);
 
 	glRotatef(50.0f, 1.0f, 1.0f, 1.0f);
 	glScalef(0.5f, 1.0f, 1.0f);
 	gluSphere(quad, 1.0, 100, 100);
 //-------------------
 	glLoadIdentity();
-	glTranslated(-0.9, 0.0, 0.0);
 
 	glTranslated(0.0, 0.0, -10.0);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+	glTranslated(-0.9, 0.0, 0.0);
 
 	glRotatef(-20.0f, -1.0f, 1.0f, 1.0f);
 	glScalef(0.5f, 1.0f, 1.0f);
@@ -76,5 +78,11 @@ void GLWidget::resizeGL(int width, int height)
 //	glOrtho(-1.5, +1.5, +1.5, -1.5, 0.0, 15.0);
 
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void GLWidget::rotateY(double dy)
+{
+	yRot += dy;
+	updateGL();
 }
 

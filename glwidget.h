@@ -6,6 +6,9 @@ class GLWidget : public QGLWidget
 public:
 	GLWidget(QWidget *parent = NULL);
 	~GLWidget();
+
+	void rotateY(double dy);
+
 protected:
 	void initializeGL();
 	void paintGL();

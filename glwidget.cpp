@@ -24,7 +24,10 @@ void GLWidget::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	GLUquadricObj *quad = gluNewQuadric();
 
+
+//-------------------
 	glLoadIdentity();
+	glTranslated(0.6, 0.0, 0.0);
 
 	glTranslated(0.0, 0.0, -10.0);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
@@ -34,6 +37,20 @@ void GLWidget::paintGL()
 	glRotatef(50.0f, 1.0f, 1.0f, 1.0f);
 	glScalef(0.5f, 1.0f, 1.0f);
 	gluSphere(quad, 1.0, 100, 100);
+//-------------------
+	glLoadIdentity();
+	glTranslated(-0.9, 0.0, 0.0);
+
+	glTranslated(0.0, 0.0, -10.0);
+	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+
+	glRotatef(-20.0f, -1.0f, 1.0f, 1.0f);
+	glScalef(0.5f, 1.0f, 1.0f);
+	gluSphere(quad, 1.0, 100, 100);
+//-------------------
+
 
 	glLoadIdentity();
 	glTranslated(0.0, 0.0, -5.0);

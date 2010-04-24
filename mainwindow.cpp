@@ -1,11 +1,20 @@
 #include <iostream>
 #include <QKeyEvent>
+#include <QtGui>
 #include "mainwindow.h"
 
 MainWindow::MainWindow()
 {
 	glWidget = new GLWidget;
 	setCentralWidget(glWidget);
+
+	mainToolbar = new QToolBar("main toolbar", this);
+	actionStart = new QAction("start", this);
+	mainToolbar->addAction(actionStart);
+
+	connect(actionStart, SIGNAL(triggered()), this, SLOT(start()));
+
+	addToolBar(Qt::TopToolBarArea, mainToolbar);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -16,5 +25,10 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 	case Qt::Key_Right: glWidget->rotateY( 100); break;
 	default: break;
 	}
+}
+
+void MainWindow::start()
+{
+	printf("start\n");
 }
 

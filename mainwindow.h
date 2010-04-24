@@ -9,7 +9,11 @@ public:
 	MainWindow();
 
 	virtual void keyPressEvent(QKeyEvent * event);
+public slots:
+	void start();
 private:
 	GLWidget *glWidget;
+	QToolBar *mainToolbar;
+	QAction *actionStart;
 };
 

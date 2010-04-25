@@ -11,6 +11,8 @@ qt4_wrap_cpp(MOC_SOURCES
 add_executable (gl
 	mainwindow.cpp
 	glwidget.cpp
+	simulationthread.cpp
+	visframe.cpp
 	main.cpp
 	${MOC_SOURCES})
 target_link_libraries(gl

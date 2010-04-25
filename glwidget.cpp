@@ -1,8 +1,10 @@
 #include "glwidget.h"
+#include "visframe.h"
 
 GLWidget::GLWidget(QWidget *parent)
 {
 	xRot = yRot = zRot = 0.0;
+	scene = NULL;
 }
 
 GLWidget::~GLWidget()
@@ -27,31 +29,22 @@ void GLWidget::paintGL()
 	GLUquadricObj *quad = gluNewQuadric();
 
 
-//-------------------
-	glLoadIdentity();
+	VisFrame *s = scene;
+	for (int i = 0; i < (s ? s->nVertex() : 0); i ++)
+	{
+		Vertex v = s->vertex(i);
 
-	glTranslated(0.0, 0.0, -10.0);
-	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
-	glTranslated(3, 0.0, 0.0);
+		glLoadIdentity();
 
-	glRotatef(50.0f, 1.0f, 1.0f, 1.0f);
-	glScalef(0.5f, 1.0f, 1.0f);
-	gluSphere(quad, 1.0, 100, 100);
-//-------------------
-	glLoadIdentity();
+		glTranslated(0.0, 0.0, -10.0);
+		glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+		glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+		glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-	glTranslated(0.0, 0.0, -10.0);
-	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
-	glTranslated(-0.9, 0.0, 0.0);
+		glTranslatef(v.x, v.y, v.z);
 
-	glRotatef(-20.0f, -1.0f, 1.0f, 1.0f);
-	glScalef(0.5f, 1.0f, 1.0f);
-	gluSphere(quad, 1.0, 100, 100);
-//-------------------
+		gluSphere(quad, 1.0, 100, 100);
+	}
 
 
 	glLoadIdentity();
@@ -83,6 +76,19 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::rotateY(double dy)
 {
 	yRot += dy;
+	updateGL();
+}
+
+void GLWidget::setVisFrame(VisFrame *f)
+{
+	scene = f;
+
+//	updateScene();
+}
+
+void GLWidget::updateScene()
+{
+	// rebuild call lists here
 	updateGL();
 }
 

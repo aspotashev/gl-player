@@ -2,6 +2,7 @@
 #include <QKeyEvent>
 #include <QtGui>
 #include "mainwindow.h"
+#include "simulationthread.h"
 
 MainWindow::MainWindow()
 {
@@ -15,6 +16,9 @@ MainWindow::MainWindow()
 	connect(actionStart, SIGNAL(triggered()), this, SLOT(start()));
 
 	addToolBar(Qt::TopToolBarArea, mainToolbar);
+
+	thread = new SimulationThread(this);
+	thread->start();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -30,5 +34,11 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 void MainWindow::start()
 {
 	printf("start\n");
+	thread->enableSim();
+}
+
+void MainWindow::loadScene(VisFrame *f)
+{
+	glWidget->setVisFrame(f);
 }
 

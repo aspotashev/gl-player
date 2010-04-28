@@ -19,6 +19,9 @@ protected:
 	void resizeGL(int width, int height);
 	void updateScene();
 
+signals:
+	void needsUpdate();
+
 private:
 	double xRot, yRot, zRot;
 	VisFrame *scene;

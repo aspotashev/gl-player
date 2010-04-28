@@ -5,6 +5,9 @@ GLWidget::GLWidget(QWidget *parent)
 {
 	xRot = yRot = zRot = 0.0;
 	scene = NULL;
+
+	connect(this, SIGNAL(needsUpdate()),
+		this, SLOT(updateGL()));
 }
 
 GLWidget::~GLWidget()
@@ -84,11 +87,13 @@ void GLWidget::setVisFrame(VisFrame *f)
 	scene = f;
 
 //	updateScene();
+	emit needsUpdate();
 }
 
 void GLWidget::updateScene()
 {
 	// rebuild call lists here
 	updateGL();
+
 }
 

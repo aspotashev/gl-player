@@ -17,13 +17,14 @@ void SimulationThread::run()
 //		{
 			VisFrame *a = new VisFrame;
 			a->addVertex(vx, 0, 0, 0.5);
+			a->addVertex(-vx, 0, 0, 0.5);
 			mw->loadScene(a);
 			vx += 0.1;
 //		}
 
 		printf("t");
 		fflush(stdout);
-		msleep(500);
+		msleep(200);
 	}
 }
 

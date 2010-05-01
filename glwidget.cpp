@@ -60,16 +60,14 @@ void GLWidget::paintGL()
 
 void GLWidget::resizeGL(int width, int height)
 {
-	int side = qMin(width, height);
-	glViewport((width - side) / 2, (height - side) / 2, side, side);
-
-
+	glViewport(0, 0, width, height);
 
 
 	glMatrixMode(GL_PROJECTION);
 
 	glLoadIdentity();
-	gluPerspective(60, 1.0, 1.0, 100.0);
+	gluPerspective(60, (double)width/(double)height, 1.0, 100.0);
+
 
 //	glOrtho(-1.5, +1.5, +1.5, -1.5, 0.0, 15.0);
 

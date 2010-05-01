@@ -12,6 +12,7 @@ public:
 	MainWindow();
 
 	virtual void keyPressEvent(QKeyEvent * event);
+	virtual void closeEvent(QCloseEvent *event);
 
 	void loadScene(VisFrame *f);
 public slots:

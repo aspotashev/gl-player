@@ -42,3 +42,9 @@ void MainWindow::loadScene(VisFrame *f)
 	glWidget->setVisFrame(f);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	thread->terminate();
+	QMainWindow::closeEvent(event);
+}
+

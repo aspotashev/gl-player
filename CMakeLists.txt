@@ -17,5 +17,5 @@ add_executable (gl
 	${MOC_SOURCES})
 target_link_libraries(gl
 	${QT_LIBRARIES}
-	glut)
+	glut GLU)
 

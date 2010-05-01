@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "simulationthread.h"
 #include "visframe.h"
 #include "mainwindow.h"

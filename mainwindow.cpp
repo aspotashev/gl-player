@@ -84,6 +84,8 @@ void MainWindow::openFile(const QString &fn)
 	fileCutter->openFile(fn.toLatin1());
 
 	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
+	currentFrameIndex = 0;
+	loadFrame(0);
 }
 
 void MainWindow::closeFile()

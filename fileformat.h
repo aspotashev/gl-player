@@ -32,6 +32,7 @@ public:
 	void readFrame(int index,
 		std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e);
 	int nFrames() const;
+	int nVertices() const;
 
 private:
 	FILE *fd;

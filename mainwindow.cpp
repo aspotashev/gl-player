@@ -105,6 +105,13 @@ void MainWindow::slotFileOpen()
 
 void MainWindow::loadFrame(int index)
 {
+	if (fileCutter == NULL ||
+		index < 0 ||
+		index >= fileCutter->nVertices())
+	{
+		return;
+	}
+
 	std::vector<VertexStruct> v;
 	std::vector<EdgeStruct> e;
 	fileCutter->readFrame(index, v, e);

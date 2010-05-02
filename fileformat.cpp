@@ -75,3 +75,8 @@ int FileFormat::nFrames() const
 	return fileHeader.nFrames;
 }
 
+int FileFormat::nVertices() const
+{
+	return fileHeader.nParticles;
+}
+

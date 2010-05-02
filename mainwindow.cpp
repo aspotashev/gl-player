@@ -112,7 +112,6 @@ void MainWindow::loadFrame(int index)
 	int nVertices = (int)v.size();
 	for (int i = 0; i < nVertices; i ++)
 	{
-		printf("(%f, %f, %f)\n", v[i].x, v[i].y, v[i].z);
 		a->addVertex(v[i].x, v[i].y, v[i].z, 0.1);
 	}
 

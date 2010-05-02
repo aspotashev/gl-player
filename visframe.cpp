@@ -8,12 +8,22 @@ Vertex::Vertex(float x, float y, float z, float r)
 	this->r = r;
 }
 
+//---------------------------------
+
+Edge::Edge(int a, int b)
+{
+	this->a = a;
+	this->b = b;
+}
+
+//---------------------------------
+
 void VisFrame::addVertex(float x, float y, float z, float r)
 {
 	v.push_back(Vertex(x, y, z, r));
 }
 
-int VisFrame::nVertex() const
+int VisFrame::nVertices() const
 {
 	return (int)v.size();
 }
@@ -21,5 +31,20 @@ int VisFrame::nVertex() const
 const Vertex &VisFrame::vertex(int i)
 {
 	return v[i];
+}
+
+void VisFrame::addEdge(int a, int b)
+{
+	e.push_back(Edge(a, b));
+}
+
+int VisFrame::nEdges() const
+{
+	return (int)e.size();
+}
+
+const Edge &VisFrame::edge(int i)
+{
+	return e[i];
 }
 

@@ -1,3 +1,5 @@
+#include <assert.h>
+#include <stdio.h>
 #include "glwidget.h"
 #include "visframe.h"
 
@@ -35,7 +37,7 @@ void GLWidget::paintGL()
 
 
 	VisFrame *s = scene;
-	for (int i = 0; i < (s ? s->nVertex() : 0); i ++)
+	for (int i = 0; i < (s ? s->nVertices() : 0); i ++)
 	{
 		Vertex v = s->vertex(i);
 
@@ -50,6 +52,31 @@ void GLWidget::paintGL()
 
 		gluSphere(quad, v.r, 5, 5);
 	}
+
+
+	glLoadIdentity();
+
+	glTranslated(0.0, 0.0, -15.0);
+	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+
+	glTranslatef(-4.5, -4.5, -4.5);
+
+	glBegin(GL_LINES);
+	for (int i = 0; i < (s ? s->nEdges() : 0); i ++)
+	{
+		printf("e\n");
+
+		Edge e = s->edge(i);
+
+		assert(e.a >= 0 && e.a < s->nVertices());
+		assert(e.b >= 0 && e.b < s->nVertices());
+
+		glVertex3f(s->vertex(e.a).x, s->vertex(e.a).y, s->vertex(e.a).z);
+		glVertex3f(s->vertex(e.b).x, s->vertex(e.b).y, s->vertex(e.b).z);
+	}
+	glEnd();
 
 
 	glLoadIdentity();

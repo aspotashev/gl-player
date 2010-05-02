@@ -21,7 +21,8 @@ public slots:
 private:
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;
-	QAction *actionStart;
 	SimulationThread *thread;
+
+	QAction *actionStart;
 };
 

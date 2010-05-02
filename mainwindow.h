@@ -15,6 +15,7 @@ public:
 	virtual void closeEvent(QCloseEvent *event);
 
 	void loadScene(VisFrame *f);
+	void rotateY(double dy);
 public slots:
 	void start();
 private:

@@ -48,3 +48,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	QMainWindow::closeEvent(event);
 }
 
+void MainWindow::rotateY(double dy)
+{
+	glWidget->rotateY(dy);
+}
+

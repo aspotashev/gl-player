@@ -41,14 +41,14 @@ void GLWidget::paintGL()
 
 		glLoadIdentity();
 
-		glTranslated(0.0, 0.0, -10.0);
+		glTranslated(0.0, 0.0, -15.0);
 		glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 		glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 		glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-		glTranslatef(v.x, v.y, v.z);
+		glTranslatef(v.x - 4.5, v.y - 4.5, v.z - 4.5);
 
-		gluSphere(quad, 1.0, 100, 100);
+		gluSphere(quad, v.r, 5, 5);
 	}
 
 
@@ -79,7 +79,8 @@ void GLWidget::resizeGL(int width, int height)
 void GLWidget::rotateY(double dy)
 {
 	yRot += dy;
-	updateGL();
+	emit needsUpdate();
+//	updateGL();
 }
 
 void GLWidget::setVisFrame(VisFrame *f)

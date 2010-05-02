@@ -117,6 +117,12 @@ void MainWindow::loadFrame(int index)
 		a->addVertex(v[i].x, v[i].y, v[i].z, 0.1);
 	}
 
+	int nEdges = (int)e.size();
+	for (int i = 0; i < nEdges; i ++)
+	{
+		a->addEdge(e[i].a, e[i].b);
+	}
+
 	loadScene(a);
 }
 

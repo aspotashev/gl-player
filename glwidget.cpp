@@ -66,8 +66,6 @@ void GLWidget::paintGL()
 	glBegin(GL_LINES);
 	for (int i = 0; i < (s ? s->nEdges() : 0); i ++)
 	{
-		printf("e\n");
-
 		Edge e = s->edge(i);
 
 		assert(e.a >= 0 && e.a < s->nVertices());

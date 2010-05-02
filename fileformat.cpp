@@ -8,6 +8,10 @@ FileFormat::FileFormat()
 
 FileFormat::~FileFormat()
 {
+	if (fd)
+	{
+		closeFile();
+	}
 }
 
 void FileFormat::openFile(const char *fn)
@@ -33,6 +37,14 @@ void FileFormat::openFile(const char *fn)
 			nEdges * sizeof(EdgeStruct),
 			SEEK_CUR) == 0);
 	}
+}
+
+void FileFormat::closeFile()
+{
+	assert(fd);
+
+	frameOffsets.clear();
+	fclose(fd);
 }
 
 void FileFormat::readFrame(int index,

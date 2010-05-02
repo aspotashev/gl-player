@@ -28,6 +28,7 @@ public:
 	~FileFormat();
 
 	void openFile(const char *fn);
+	void closeFile();
 	void readFrame(int index,
 		std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e);
 	int nFrames() const;

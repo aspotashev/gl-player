@@ -10,6 +10,8 @@
 
 MainWindow::MainWindow()
 {
+	resize(500, 500);
+
 	fileCutter = NULL;
 
 	glWidget = new GLWidget;

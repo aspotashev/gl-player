@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <QtGui>
 #include "glwidget.h"
 #include "visframe.h"
 
@@ -121,5 +122,22 @@ void GLWidget::updateScene()
 	// rebuild call lists here
 	updateGL();
 
+}
+
+void GLWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (event->buttons() == Qt::LeftButton)
+	{
+		clickPoint = event->pos();
+	}
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (event->buttons() == Qt::LeftButton)
+	{
+		rotateY(2.5*(event->x() - clickPoint.x()));
+		clickPoint = event->pos();
+	}
 }
 

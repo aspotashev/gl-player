@@ -32,6 +32,8 @@ MainWindow::MainWindow()
 	playbackToolbar->addWidget(playbackSlider);
 	addToolBar(Qt::BottomToolBarArea, playbackToolbar);
 
+	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
+
 //--------------------------
 	thread = new SimulationThread(this);
 	thread->start();
@@ -75,6 +77,8 @@ void MainWindow::openFile(const QString &fn)
 	fileName = fn;
 	fileCutter = new FileFormat();
 	fileCutter->openFile(fn.toLatin1());
+
+	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
 }
 
 void MainWindow::slotFileOpen()
@@ -114,5 +118,10 @@ void MainWindow::loadNextFrame()
 	{
 		assert(0);
 	}
+}
+
+void MainWindow::slotGotoFrame(int index)
+{
+	loadFrame(index);
 }
 

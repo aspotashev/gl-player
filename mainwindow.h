@@ -24,6 +24,7 @@ public:
 public slots:
 	void slotStart();
 	void slotFileOpen();
+	void slotGotoFrame(int index);
 private:
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;

@@ -20,11 +20,12 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
 	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
+	glClearColor(0.3, 0.3, 0.5, 0);
 	glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+//	glEnable(GL_LIGHTING);
+//	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
 	glMaterialf(GL_FRONT, GL_DIFFUSE, 0.5);
 }
@@ -64,6 +65,7 @@ void GLWidget::paintGL()
 
 	glTranslatef(-4.5, -4.5, -4.5);
 
+	glColor3f(0.2, 0.2, 0.2);
 	glBegin(GL_LINES);
 	for (int i = 0; i < (s ? s->nEdges() : 0); i ++)
 	{
@@ -75,6 +77,15 @@ void GLWidget::paintGL()
 		glVertex3f(s->vertex(e.a).x, s->vertex(e.a).y, s->vertex(e.a).z);
 		glVertex3f(s->vertex(e.b).x, s->vertex(e.b).y, s->vertex(e.b).z);
 	}
+	glEnd();
+
+
+	glColor3f(0.2, 0.5, 0.5);
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.5f, -0.5f, 0.0f);
+	glVertex3f( 9.5f, -0.5f, 0.0f);
+	glVertex3f( 9.5f,  9.5f, 0.0f);
+	glVertex3f(-0.5f,  9.5f, 0.0f);
 	glEnd();
 
 

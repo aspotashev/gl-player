@@ -6,6 +6,7 @@
 #include "simulationthread.h"
 #include "fileformat.h"
 #include "visframe.h"
+#include "playbackslider.h"
 
 MainWindow::MainWindow()
 {
@@ -26,6 +27,12 @@ MainWindow::MainWindow()
 
 	addToolBar(Qt::TopToolBarArea, mainToolbar);
 
+	playbackToolbar = new QToolBar("playback toolbar", this);
+	playbackSlider = new PlaybackSlider(playbackToolbar);
+	playbackToolbar->addWidget(playbackSlider);
+	addToolBar(Qt::BottomToolBarArea, playbackToolbar);
+
+//--------------------------
 	thread = new SimulationThread(this);
 	thread->start();
 }

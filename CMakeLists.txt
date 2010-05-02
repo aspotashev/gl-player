@@ -15,6 +15,7 @@ add_executable (gl
 	visframe.cpp
 	main.cpp
 	fileformat.cpp
+	playbackslider.cpp
 	${MOC_SOURCES})
 target_link_libraries(gl
 	${QT_LIBRARIES}

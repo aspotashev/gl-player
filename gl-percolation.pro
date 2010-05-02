@@ -8,6 +8,7 @@ SOURCES += \
 	simulationthread.cpp \
 	visframe.cpp         \
 	main.cpp             \
+	playbackslider.cpp   \
 	fileformat.cpp
 
 HEADERS += \
@@ -15,5 +16,6 @@ HEADERS += \
 	glwidget.h           \
 	fileformat.h         \
 	visframe.h           \
+	playbackslider.h     \
 	simulationthread.h
 

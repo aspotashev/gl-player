@@ -4,6 +4,7 @@
 class SimulationThread;
 class VisFrame;
 class FileFormat;
+class PlaybackSlider;
 
 class MainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ public slots:
 private:
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;
+	QToolBar *playbackToolbar;
 	SimulationThread *thread;
 
 	QAction *actionStart;
@@ -35,5 +37,7 @@ private:
 	FileFormat *fileCutter;
 
 	int currentFrameIndex;
+
+	PlaybackSlider *playbackSlider;
 };
 

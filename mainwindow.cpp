@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "simulationthread.h"
 #include "fileformat.h"
+#include "visframe.h"
 
 MainWindow::MainWindow()
 {
@@ -64,5 +65,23 @@ void MainWindow::slotFileOpen()
 		tr("Recordings (*.bin)"));
 
 	fileCutter->openFile(fileName.toLatin1());
+}
+
+void MainWindow::loadFrame(FileFormat *f, int index)
+{
+	std::vector<VertexStruct> v;
+	std::vector<EdgeStruct> e;
+	f->readFrame(index, v, e);
+
+	VisFrame *a = new VisFrame;
+
+	int nVertices = (int)v.size();
+	for (int i = 0; i < nVertices; i ++)
+	{
+		printf("(%f, %f, %f)\n", v[i].x, v[i].y, v[i].z);
+		a->addVertex(v[i].x, v[i].y, v[i].z, 0.1);
+	}
+
+	loadScene(a);
 }
 

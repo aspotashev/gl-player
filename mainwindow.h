@@ -17,6 +17,7 @@ public:
 
 	void loadScene(VisFrame *f);
 	void rotateY(double dy);
+	void loadFrame(FileFormat *f, int index);
 public slots:
 	void slotStart();
 	void slotFileOpen();

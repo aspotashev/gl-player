@@ -17,7 +17,9 @@ public:
 
 	void loadScene(VisFrame *f);
 	void rotateY(double dy);
-	void loadFrame(FileFormat *f, int index);
+	void loadFrame(int index);
+	void loadNextFrame();
+	void openFile(const QString &fn);
 public slots:
 	void slotStart();
 	void slotFileOpen();
@@ -31,5 +33,7 @@ private:
 
 	QString fileName;
 	FileFormat *fileCutter;
+
+	int currentFrameIndex;
 };
 

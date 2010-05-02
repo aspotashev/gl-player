@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <iostream>
 #include <QKeyEvent>
 #include <QtGui>
@@ -8,6 +9,8 @@
 
 MainWindow::MainWindow()
 {
+	fileCutter = NULL;
+
 	glWidget = new GLWidget;
 	setCentralWidget(glWidget);
 
@@ -58,20 +61,29 @@ void MainWindow::rotateY(double dy)
 	glWidget->rotateY(dy);
 }
 
+void MainWindow::openFile(const QString &fn)
+{
+	assert(fileCutter == NULL);
+
+	fileName = fn;
+	fileCutter = new FileFormat();
+	fileCutter->openFile(fn.toLatin1());
+}
+
 void MainWindow::slotFileOpen()
 {
-	fileName = QFileDialog::getOpenFileName(this,
+	QString fn = QFileDialog::getOpenFileName(this,
 		tr("Open saved file"), ".",
 		tr("Recordings (*.bin)"));
 
-	fileCutter->openFile(fileName.toLatin1());
+	openFile(fn);
 }
 
-void MainWindow::loadFrame(FileFormat *f, int index)
+void MainWindow::loadFrame(int index)
 {
 	std::vector<VertexStruct> v;
 	std::vector<EdgeStruct> e;
-	f->readFrame(index, v, e);
+	fileCutter->readFrame(index, v, e);
 
 	VisFrame *a = new VisFrame;
 
@@ -83,5 +95,17 @@ void MainWindow::loadFrame(FileFormat *f, int index)
 	}
 
 	loadScene(a);
+}
+
+void MainWindow::loadNextFrame()
+{
+	if (currentFrameIndex < fileCutter->nFrames() - 1)
+	{
+		loadFrame(++currentFrameIndex);
+	}
+	else
+	{
+		assert(0);
+	}
 }
 

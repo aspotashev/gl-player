@@ -30,6 +30,7 @@ public:
 	void openFile(const char *fn);
 	void readFrame(int index,
 		std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e);
+	int nFrames() const;
 
 private:
 	FILE *fd;

@@ -20,14 +20,14 @@ void FileFormat::openFile(const char *fn)
 	fd = fopen(fn, "rb");
 	assert(fd);
 
-	fread(&fileHeader, sizeof(fileHeader), 1, fd);
+	assert(fread(&fileHeader, sizeof(fileHeader), 1, fd) == 1);
 
 	for (int i = 0; i < fileHeader.nFrames; i ++)
 	{
 		frameOffsets.push_back(ftell(fd));
 
 		int nEdges;
-		fread(&nEdges, sizeof(nEdges), 1, fd);
+		assert(fread(&nEdges, sizeof(nEdges), 1, fd) == 1);
 		assert(fseek(fd,
 			fileHeader.nParticles * sizeof(VertexStruct) +
 			nEdges * sizeof(EdgeStruct),
@@ -41,20 +41,25 @@ void FileFormat::readFrame(int index,
 	fseek(fd, frameOffsets[index], SEEK_SET);
 
 	int nEdges;
-	fread(&nEdges, sizeof(nEdges), 1, fd);
+	assert(fread(&nEdges, sizeof(nEdges), 1, fd) == 1);
 
 	for (int i = 0; i < fileHeader.nParticles; i ++)
 	{
 		VertexStruct vertex;
-		fread(&vertex, sizeof(vertex), 1, fd);
+		assert(fread(&vertex, sizeof(vertex), 1, fd) == 1);
 		v.push_back(vertex);
 	}
 
 	for (int i = 0; i < nEdges; i ++)
 	{
 		EdgeStruct edge;
-		fread(&edge, sizeof(edge), 1, fd);
+		assert(fread(&edge, sizeof(edge), 1, fd) == 1);
 		e.push_back(edge);
 	}
+}
+
+int FileFormat::nFrames() const
+{
+	return fileHeader.nFrames;
 }
 

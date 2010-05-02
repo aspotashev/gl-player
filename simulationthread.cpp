@@ -11,10 +11,8 @@ SimulationThread::SimulationThread(MainWindow *mw)
 
 void SimulationThread::run()
 {
-	FileFormat *f = new FileFormat();
-	f->openFile("temp.bin");
-
-	mw->loadFrame(f, 0);
+	mw->openFile(QString("temp.bin"));
+	mw->loadFrame(0);
 
 	float vx = 0.0;
 
@@ -31,7 +29,7 @@ void SimulationThread::run()
 		fflush(stdout);
 		msleep(2000);
 
-		mw->loadFrame(f, 30*(++index));
+		mw->loadFrame(30*(++index));
 
 //		mw->rotateY(5.0);
 	}

@@ -72,13 +72,22 @@ void MainWindow::rotateY(double dy)
 
 void MainWindow::openFile(const QString &fn)
 {
-	assert(fileCutter == NULL);
+	if (fileCutter != NULL)
+	{
+		closeFile();
+	}
 
 	fileName = fn;
 	fileCutter = new FileFormat();
 	fileCutter->openFile(fn.toLatin1());
 
 	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
+}
+
+void MainWindow::closeFile()
+{
+	delete fileCutter;
+	fileCutter = NULL;
 }
 
 void MainWindow::slotFileOpen()

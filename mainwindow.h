@@ -21,6 +21,7 @@ public:
 	void loadFrame(int index);
 	void loadNextFrame();
 	void openFile(const QString &fn);
+	void closeFile();
 public slots:
 	void slotStart();
 	void slotFileOpen();

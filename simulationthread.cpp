@@ -2,6 +2,7 @@
 #include "simulationthread.h"
 #include "visframe.h"
 #include "mainwindow.h"
+#include "fileformat.h"
 
 SimulationThread::SimulationThread(MainWindow *mw)
 {
@@ -10,6 +11,20 @@ SimulationThread::SimulationThread(MainWindow *mw)
 
 void SimulationThread::run()
 {
+	FileFormat *f = new FileFormat();
+	f->openFile("../temp.bin");
+
+	std::vector<VertexStruct> v;
+	std::vector<EdgeStruct> e;
+	f->readFrame(0, v, e);
+
+	int nVertices = (int)v.size();
+	for (int i = 0; i < nVertices; i ++)
+	{
+		printf("(%f, %f, %f)\n", v[i].x, v[i].y, v[i].z);
+	}
+
+
 	float vx = 0.0;
 
 	while (1)

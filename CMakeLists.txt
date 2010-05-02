@@ -14,6 +14,7 @@ add_executable (gl
 	simulationthread.cpp
 	visframe.cpp
 	main.cpp
+	fileformat.cpp
 	${MOC_SOURCES})
 target_link_libraries(gl
 	${QT_LIBRARIES}

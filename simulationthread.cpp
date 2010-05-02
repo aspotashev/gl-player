@@ -30,7 +30,7 @@ void SimulationThread::loadFrame(FileFormat *f, int index)
 void SimulationThread::run()
 {
 	FileFormat *f = new FileFormat();
-	f->openFile("../temp.bin");
+	f->openFile("temp.bin");
 
 	loadFrame(f, 0);
 

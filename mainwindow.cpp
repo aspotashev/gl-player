@@ -3,6 +3,7 @@
 #include <QtGui>
 #include "mainwindow.h"
 #include "simulationthread.h"
+#include "fileformat.h"
 
 MainWindow::MainWindow()
 {
@@ -10,10 +11,14 @@ MainWindow::MainWindow()
 	setCentralWidget(glWidget);
 
 	mainToolbar = new QToolBar("main toolbar", this);
+
 	actionStart = new QAction("start", this);
 	mainToolbar->addAction(actionStart);
+	connect(actionStart, SIGNAL(triggered()), this, SLOT(slotStart()));
 
-	connect(actionStart, SIGNAL(triggered()), this, SLOT(start()));
+	actionFileOpen = new QAction("open", this);
+	mainToolbar->addAction(actionFileOpen);
+	connect(actionFileOpen, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
 	addToolBar(Qt::TopToolBarArea, mainToolbar);
 
@@ -31,8 +36,7 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 	}
 }
 
-void MainWindow::start()
-{
+void MainWindow::slotStart() {
 	printf("start\n");
 	thread->enableSim();
 }
@@ -51,5 +55,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::rotateY(double dy)
 {
 	glWidget->rotateY(dy);
+}
+
+void MainWindow::slotFileOpen()
+{
+	fileName = QFileDialog::getOpenFileName(this,
+		tr("Open saved file"), ".",
+		tr("Recordings (*.bin)"));
+
+	fileCutter->openFile(fileName.toLatin1());
 }
 

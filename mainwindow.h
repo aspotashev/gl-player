@@ -3,6 +3,7 @@
 
 class SimulationThread;
 class VisFrame;
+class FileFormat;
 
 class MainWindow : public QMainWindow
 {
@@ -17,12 +18,17 @@ public:
 	void loadScene(VisFrame *f);
 	void rotateY(double dy);
 public slots:
-	void start();
+	void slotStart();
+	void slotFileOpen();
 private:
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;
 	SimulationThread *thread;
 
 	QAction *actionStart;
+	QAction *actionFileOpen;
+
+	QString fileName;
+	FileFormat *fileCutter;
 };
 

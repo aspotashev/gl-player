@@ -11,8 +11,8 @@ SimulationThread::SimulationThread(MainWindow *mw)
 
 void SimulationThread::run()
 {
-	mw->openFile(QString("temp.bin"));
-	mw->loadFrame(0);
+//	mw->openFile(QString("temp.bin"));
+//	mw->loadFrame(0);
 
 	float vx = 0.0;
 

@@ -29,7 +29,7 @@ void SimulationThread::run()
 		fflush(stdout);
 		msleep(2000);
 
-		mw->loadFrame(30*(++index));
+//		mw->loadFrame(30*(++index));
 
 //		mw->rotateY(5.0);
 	}

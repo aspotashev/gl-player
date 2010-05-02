@@ -100,7 +100,10 @@ void MainWindow::slotFileOpen()
 		tr("Open saved file"), ".",
 		tr("Recordings (*.bin)"));
 
-	openFile(fn);
+	if (!fn.isNull())
+	{
+		openFile(fn);
+	}
 }
 
 void MainWindow::loadFrame(int index)

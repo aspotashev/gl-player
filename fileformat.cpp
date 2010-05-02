@@ -14,28 +14,33 @@ FileFormat::~FileFormat()
 	}
 }
 
-void FileFormat::openFile(const char *fn)
+void FileFormat::openFile(const QString &fn)
 {
 	if (fd)
 	{
 		assert(0);
 	}
 
-	fd = fopen(fn, "rb");
-	assert(fd);
+	fd = new QFile(fn);
+	if (!fd->open(QIODevice::ReadOnly))
+	{
+		assert(0);
+	}
 
-	assert(fread(&fileHeader, sizeof(fileHeader), 1, fd) == 1);
+	assert(fd->read((char *)&fileHeader, sizeof(fileHeader)) ==
+		sizeof(fileHeader));
 
 	for (int i = 0; i < fileHeader.nFrames; i ++)
 	{
-		frameOffsets.push_back(ftell(fd));
+		frameOffsets.push_back(fd->pos());
 
 		int nEdges;
-		assert(fread(&nEdges, sizeof(nEdges), 1, fd) == 1);
-		assert(fseek(fd,
+		assert(fd->read((char *)&nEdges, sizeof(nEdges)) ==
+			sizeof(nEdges));
+
+		fd->seek(fd->pos() +
 			fileHeader.nParticles * sizeof(VertexStruct) +
-			nEdges * sizeof(EdgeStruct),
-			SEEK_CUR) == 0);
+			nEdges * sizeof(EdgeStruct));
 	}
 }
 
@@ -44,28 +49,31 @@ void FileFormat::closeFile()
 	assert(fd);
 
 	frameOffsets.clear();
-	fclose(fd);
+	fd->close();
 }
 
 void FileFormat::readFrame(int index,
 	std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e)
 {
-	fseek(fd, frameOffsets[index], SEEK_SET);
+	fd->seek(frameOffsets[index]);
 
 	int nEdges;
-	assert(fread(&nEdges, sizeof(nEdges), 1, fd) == 1);
+	assert(fd->read((char *)&nEdges, sizeof(nEdges)) ==
+		sizeof(nEdges));
 
 	for (int i = 0; i < fileHeader.nParticles; i ++)
 	{
 		VertexStruct vertex;
-		assert(fread(&vertex, sizeof(vertex), 1, fd) == 1);
+		assert(fd->read((char *)&vertex, sizeof(vertex)) ==
+			sizeof(vertex));
 		v.push_back(vertex);
 	}
 
 	for (int i = 0; i < nEdges; i ++)
 	{
 		EdgeStruct edge;
-		assert(fread(&edge, sizeof(edge), 1, fd) == 1);
+		assert(fd->read((char *)&edge, sizeof(edge)) ==
+			sizeof(edge));
 		e.push_back(edge);
 	}
 }

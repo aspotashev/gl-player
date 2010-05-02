@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <vector>
+#include <QtGui>
 
 #pragma pack(push,4)
 struct FileHeaderStruct
@@ -27,7 +28,7 @@ public:
 	FileFormat();
 	~FileFormat();
 
-	void openFile(const char *fn);
+	void openFile(const QString &fn);
 	void closeFile();
 	void readFrame(int index,
 		std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e);
@@ -35,8 +36,9 @@ public:
 	int nVertices() const;
 
 private:
-	FILE *fd;
+	QFile *fd;
+
 	FileHeaderStruct fileHeader;
-	std::vector<long> frameOffsets;
+	std::vector<qint64> frameOffsets;
 };
 

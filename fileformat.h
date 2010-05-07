@@ -5,6 +5,7 @@
 #pragma pack(push,4)
 struct FileHeaderStruct
 {
+	int fileVersion;
 	int nParticles;
 	int nFrames;
 	float framesPerSecond;

@@ -35,17 +35,10 @@ void FileFormat::openFile(const QString &fn)
 	{
 		frameOffsets.push_back(fd->pos());
 
-		printf("\npos: %d\n", (int)fd->pos());
-
 		int nEdges;
 		fd->seek(fd->pos() + 4); // skip the pressure (float, 4 bytes)
 		assert(fd->read((char *)&nEdges, sizeof(nEdges)) ==
 			sizeof(nEdges));
-
-		printf("\nnEdges = %d, nParticles = %d, delta = %d\n",
-			nEdges, fileHeader.nParticles,
-			fileHeader.nParticles * sizeof(VertexStruct) +
-			nEdges * sizeof(EdgeStruct));
 
 		fd->seek(fd->pos() +
 			fileHeader.nParticles * sizeof(VertexStruct) +
@@ -64,7 +57,7 @@ void FileFormat::closeFile()
 void FileFormat::readFrame(int index,
 	std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e)
 {
-	fd->seek(frameOffsets[index]);
+	fileSeekFrame(index);
 
 	int nEdges;
 	float pressure;
@@ -98,5 +91,27 @@ int FileFormat::nFrames() const
 int FileFormat::nVertices() const
 {
 	return fileHeader.nParticles;
+}
+
+void FileFormat::fileSeekFrame(int index)
+{
+	fd->seek(frameOffsets[index]);
+}
+
+std::vector<float> FileFormat::loadPressureData()
+{
+	std::vector<float> data;
+
+	for (int i = 0; i < nFrames(); i ++)
+	{
+		fileSeekFrame(i);
+
+		float pressure;
+		assert(fd->read((char *)&pressure, sizeof(pressure)) ==
+			sizeof(pressure));
+		data.push_back(pressure);
+	}
+
+	return data;
 }
 

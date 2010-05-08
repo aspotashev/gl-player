@@ -9,6 +9,7 @@ SOURCES += \
 	visframe.cpp         \
 	main.cpp             \
 	playbackslider.cpp   \
+	timeplot.cpp         \
 	fileformat.cpp
 
 HEADERS += \
@@ -17,5 +18,6 @@ HEADERS += \
 	fileformat.h         \
 	visframe.h           \
 	playbackslider.h     \
+	timeplot.h           \
 	simulationthread.h
 

@@ -5,6 +5,7 @@ class SimulationThread;
 class VisFrame;
 class FileFormat;
 class PlaybackSlider;
+class TimePlot;
 
 class MainWindow : public QMainWindow
 {
@@ -41,5 +42,6 @@ private:
 	int currentFrameIndex;
 
 	PlaybackSlider *playbackSlider;
+	TimePlot *timePlot;
 };
 

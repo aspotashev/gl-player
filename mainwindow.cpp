@@ -7,6 +7,7 @@
 #include "fileformat.h"
 #include "visframe.h"
 #include "playbackslider.h"
+#include "timeplot.h"
 
 MainWindow::MainWindow()
 {
@@ -35,6 +36,9 @@ MainWindow::MainWindow()
 	addToolBar(Qt::BottomToolBarArea, playbackToolbar);
 
 	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
+
+	timePlot = new TimePlot();
+	timePlot->show();
 
 //--------------------------
 	thread = new SimulationThread(this);
@@ -86,12 +90,15 @@ void MainWindow::openFile(const QString &fn)
 	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
 	currentFrameIndex = 0;
 	loadFrame(0);
+	timePlot->loadData(fileCutter->loadPressureData());
 }
 
 void MainWindow::closeFile()
 {
 	delete fileCutter;
 	fileCutter = NULL;
+
+	timePlot->clear();
 }
 
 void MainWindow::slotFileOpen()

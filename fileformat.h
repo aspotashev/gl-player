@@ -35,6 +35,8 @@ public:
 		std::vector<VertexStruct> &v, std::vector<EdgeStruct> &e);
 	int nFrames() const;
 	int nVertices() const;
+	void fileSeekFrame(int index);
+	std::vector<float> loadPressureData();
 
 private:
 	QFile *fd;

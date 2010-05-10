@@ -2,6 +2,8 @@
 
 class TimePlot : public QWidget
 {
+	Q_OBJECT
+
 public:
 	TimePlot(QWidget *parent = NULL);
 	~TimePlot();

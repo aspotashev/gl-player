@@ -34,10 +34,11 @@ MainWindow::MainWindow()
 	playbackToolbar->addWidget(playbackSlider);
 	addToolBar(Qt::BottomToolBarArea, playbackToolbar);
 
-	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
-
 	timePlot = new TimePlot();
 	timePlot->show();
+
+	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
+	connect(playbackSlider, SIGNAL(valueChanged(int)), timePlot, SLOT(moveCurrentMark(int)));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)

@@ -12,6 +12,8 @@ TimePlot::TimePlot(QWidget *parent):
 	graphicsView = new QGraphicsView(graphicsScene, this);
 	resizeGraphicsViewToFit();
 	graphicsView->show();
+
+	currentMark = NULL;
 }
 
 TimePlot::~TimePlot()
@@ -42,6 +44,9 @@ void TimePlot::loadData(std::vector<float> data)
 	resizeGraphicsViewToFit();
 
 	graphicsView->setFrameStyle(QFrame::NoFrame);
+
+
+	moveCurrentMark(50);
 }
 
 void TimePlot::clear()
@@ -62,5 +67,23 @@ void TimePlot::resizeGraphicsViewToFit()
 {
 	graphicsView->resize(width(), height());
 	graphicsView->fitInView(0, 0, data.size() - 1, data_max);
+}
+
+void TimePlot::moveCurrentMark(int val)
+{
+	if (!currentMark)
+	{
+		QColor color = QColor(255, 0, 0);
+		currentMark = graphicsScene->addRect(
+			0, 0, 1, 1,
+			QPen(color), QBrush(color));
+	}
+
+	graphicsScene->removeItem(currentMark);
+
+	currentMarkPos = val;
+	qreal halfWidth = 0.2;
+	currentMark->setRect(val - halfWidth, 0, 2*halfWidth, data_max);
+	graphicsScene->addItem(currentMark);
 }
 

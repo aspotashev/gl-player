@@ -44,9 +44,6 @@ void TimePlot::loadData(std::vector<float> data)
 	resizeGraphicsViewToFit();
 
 	graphicsView->setFrameStyle(QFrame::NoFrame);
-
-
-	moveCurrentMark(50);
 }
 
 void TimePlot::clear()
@@ -71,6 +68,11 @@ void TimePlot::resizeGraphicsViewToFit()
 
 void TimePlot::moveCurrentMark(int val)
 {
+	if (data.size() == 0)
+	{
+		return;
+	}
+
 	if (!currentMark)
 	{
 		QColor color = QColor(255, 0, 0);

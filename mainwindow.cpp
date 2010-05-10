@@ -36,7 +36,6 @@ MainWindow::MainWindow()
 
 	timePlot = new TimePlot();
 	addDockWidget(Qt::BottomDockWidgetArea, timePlot);
-//	timePlot->show();
 
 	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
 	connect(playbackSlider, SIGNAL(valueChanged(int)), timePlot, SLOT(moveCurrentMark(int)));
@@ -86,6 +85,7 @@ void MainWindow::openFile(const QString &fn)
 	currentFrameIndex = 0;
 	loadFrame(0);
 	timePlot->loadData(fileCutter->loadPressureData());
+	timePlot->moveCurrentMark(0);
 }
 
 void MainWindow::closeFile()

@@ -55,6 +55,10 @@ void TimePlot::resizeEvent(QResizeEvent *event)
 	resizeGraphicsViewToFit();
 }
 
+void TimePlot::mousePressEvent(QMouseEvent *event)
+{
+}
+
 void TimePlot::resizeGraphicsViewToFit()
 {
 	graphicsView->resize(width(), height());

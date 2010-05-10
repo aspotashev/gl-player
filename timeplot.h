@@ -11,11 +11,7 @@ public:
 
 protected:
 	virtual void resizeEvent(QResizeEvent *event);
-
-	virtual void mousePressEvent(QMouseEvent *event)
-	{
-		printf("mmm\n");
-	}
+	virtual void mousePressEvent(QMouseEvent *event);
 
 private:
 	void resizeGraphicsViewToFit();

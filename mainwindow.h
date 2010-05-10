@@ -1,7 +1,6 @@
 #include <QMainWindow>
 #include "glwidget.h"
 
-class SimulationThread;
 class VisFrame;
 class FileFormat;
 class PlaybackSlider;
@@ -31,7 +30,6 @@ private:
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;
 	QToolBar *playbackToolbar;
-	SimulationThread *thread;
 
 	QAction *actionStart;
 	QAction *actionFileOpen;

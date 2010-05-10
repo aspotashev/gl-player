@@ -5,7 +5,6 @@ TEMPLATE = app
 SOURCES += \
 	mainwindow.cpp       \
 	glwidget.cpp         \
-	simulationthread.cpp \
 	visframe.cpp         \
 	main.cpp             \
 	playbackslider.cpp   \
@@ -18,6 +17,5 @@ HEADERS += \
 	fileformat.h         \
 	visframe.h           \
 	playbackslider.h     \
-	timeplot.h           \
-	simulationthread.h
+	timeplot.h
 

@@ -3,7 +3,6 @@
 #include <QKeyEvent>
 #include <QtGui>
 #include "mainwindow.h"
-#include "simulationthread.h"
 #include "fileformat.h"
 #include "visframe.h"
 #include "playbackslider.h"
@@ -39,10 +38,6 @@ MainWindow::MainWindow()
 
 	timePlot = new TimePlot();
 	timePlot->show();
-
-//--------------------------
-	thread = new SimulationThread(this);
-	thread->start();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -57,7 +52,6 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 
 void MainWindow::slotStart() {
 	printf("start\n");
-	thread->enableSim();
 }
 
 void MainWindow::loadScene(VisFrame *f)
@@ -67,7 +61,6 @@ void MainWindow::loadScene(VisFrame *f)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	thread->terminate();
 	QMainWindow::closeEvent(event);
 }
 

@@ -38,7 +38,6 @@ void TimePlot::loadData(std::vector<float> data)
 	}
 
 	graphicsView->setSceneRect(0, 0, data.size() - 1, data_max);
-//	graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	resizeGraphicsViewToFit();
 

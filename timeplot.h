@@ -1,6 +1,6 @@
 #include <QtGui>
 
-class TimePlot : public QWidget
+class TimePlot : public QDockWidget
 {
 	Q_OBJECT
 

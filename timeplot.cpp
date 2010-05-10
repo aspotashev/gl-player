@@ -2,7 +2,7 @@
 #include "timeplot.h"
 
 TimePlot::TimePlot(QWidget *parent):
-	QWidget(parent)
+	QDockWidget(parent)
 {
 	data_max = 0;
 	resize(500, 100);

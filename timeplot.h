@@ -32,5 +32,10 @@ private:
 
 	std::vector<float> data;
 	float data_max;
+
+	int leftMargin;
+	int topMargin;
+	int rightMargin;
+	int bottomMargin;
 };
 

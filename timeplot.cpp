@@ -14,6 +14,11 @@ TimePlot::TimePlot(QWidget *parent):
 	graphicsView->show();
 
 	currentMark = NULL;
+
+	leftMargin = 50;
+	topMargin = 10;
+	rightMargin = 10;
+	bottomMargin = 10;
 }
 
 TimePlot::~TimePlot()
@@ -63,11 +68,6 @@ void TimePlot::mousePressEvent(QMouseEvent *event)
 
 void TimePlot::resizeGraphicsViewToFit()
 {
-	int leftMargin = 50;
-	int topMargin = 10;
-	int rightMargin = 10;
-	int bottomMargin = 10;
-
 	graphicsView->move(-3 + leftMargin, -3 + topMargin);
 	graphicsView->resize(
 		width() + 6 - leftMargin - rightMargin,

@@ -17,6 +17,7 @@ public slots:
 protected:
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
+	virtual QSize sizeHint() const;
 
 private:
 	void resizeGraphicsViewToFit();

@@ -89,3 +89,8 @@ void TimePlot::moveCurrentMark(int val)
 	graphicsScene->addItem(currentMark);
 }
 
+QSize TimePlot::sizeHint() const
+{
+	return QSize(500, 100);
+}
+

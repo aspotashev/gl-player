@@ -7,6 +7,7 @@
 GLWidget::GLWidget(QWidget *parent)
 {
 	xRot = yRot = zRot = 0.0;
+	zTrans = 0.0;
 	scene = NULL;
 
 	connect(this, SIGNAL(needsUpdate()),
@@ -45,7 +46,7 @@ void GLWidget::paintGL()
 
 		glLoadIdentity();
 
-		glTranslated(0.0, 0.0, -15.0);
+		glTranslated(0.0, 0.0, -15.0 + zTrans);
 		glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 		glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 		glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
@@ -58,7 +59,7 @@ void GLWidget::paintGL()
 
 	glLoadIdentity();
 
-	glTranslated(0.0, 0.0, -15.0);
+	glTranslated(0.0, 0.0, -15.0 + zTrans);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
@@ -150,5 +151,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 		rotateY(2.5*(event->x() - clickPoint.x()));
 		clickPoint = event->pos();
 	}
+}
+
+void GLWidget::wheelEvent(QWheelEvent *event)
+{
+	zTrans += event->delta()/100;
+	emit needsUpdate();
 }
 

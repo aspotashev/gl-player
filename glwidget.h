@@ -21,12 +21,14 @@ protected:
 
 	virtual void mouseMoveEvent(QMouseEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
+	virtual void wheelEvent(QWheelEvent *event);
 
 signals:
 	void needsUpdate();
 
 private:
 	double xRot, yRot, zRot;
+	double zTrans;
 	VisFrame *scene;
 
 	QPoint clickPoint;

@@ -18,6 +18,7 @@ protected:
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual QSize sizeHint() const;
+	virtual void paintEvent(QPaintEvent *event);
 
 private:
 	void resizeGraphicsViewToFit();

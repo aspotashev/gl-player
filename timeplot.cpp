@@ -44,6 +44,7 @@ void TimePlot::loadData(std::vector<float> data)
 	resizeGraphicsViewToFit();
 
 	graphicsView->setFrameStyle(QFrame::NoFrame);
+	graphicsView->setFrameShadow(QFrame::Plain);
 }
 
 void TimePlot::clear()
@@ -62,7 +63,16 @@ void TimePlot::mousePressEvent(QMouseEvent *event)
 
 void TimePlot::resizeGraphicsViewToFit()
 {
-	graphicsView->resize(width(), height());
+	int leftMargin = 50;
+	int topMargin = 10;
+	int rightMargin = 10;
+	int bottomMargin = 10;
+
+	graphicsView->move(-3 + leftMargin, -3 + topMargin);
+	graphicsView->resize(
+		width() + 6 - leftMargin - rightMargin,
+		height() + 6 - topMargin - bottomMargin);
+
 	graphicsView->fitInView(0, 0, data.size() - 1, data_max);
 }
 
@@ -92,5 +102,13 @@ void TimePlot::moveCurrentMark(int val)
 QSize TimePlot::sizeHint() const
 {
 	return QSize(500, 100);
+}
+
+void TimePlot::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+	painter.setPen(Qt::blue);
+	painter.setBrush(Qt::blue);
+	painter.drawRect(-1000, -1000, 2000, 2000);
 }
 

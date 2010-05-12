@@ -15,9 +15,9 @@ TimePlot::TimePlot(QWidget *parent):
 
 	currentMark = NULL;
 
-	leftMargin = 50;
-	topMargin = 10;
-	rightMargin = 10;
+	leftMargin = 10;
+	topMargin = 0;
+	rightMargin = 0;
 	bottomMargin = 10;
 }
 

@@ -14,6 +14,7 @@ TimePlot::TimePlot(QWidget *parent):
 	graphicsView->show();
 
 	currentMark = NULL;
+	currentMarkVisible = false;
 
 	leftMargin = 10;
 	topMargin = 0;
@@ -36,6 +37,8 @@ void TimePlot::loadData(std::vector<float> data)
 		data_max = std::max(data_max, data[i]);
 	}
 
+	hideCurrentMark(); // remove (but not delete) the mark
+	graphicsScene->clear(); // remove & delete all items from the scene
 	for (int i = 0; i < (int)data.size() - 1; i ++)
 	{
 		graphicsScene->addLine(
@@ -76,6 +79,15 @@ void TimePlot::resizeGraphicsViewToFit()
 	graphicsView->fitInView(0, 0, data.size() - 1, data_max);
 }
 
+void TimePlot::hideCurrentMark()
+{
+	if (currentMark && currentMarkVisible)
+	{
+		graphicsScene->removeItem(currentMark);
+		currentMarkVisible = false;
+	}
+}
+
 void TimePlot::moveCurrentMark(int val)
 {
 	if (data.size() == 0)
@@ -89,14 +101,17 @@ void TimePlot::moveCurrentMark(int val)
 		currentMark = graphicsScene->addRect(
 			0, 0, 1, 1,
 			QPen(color), QBrush(color));
+		currentMarkVisible = true;
 	}
 
-	graphicsScene->removeItem(currentMark);
+	hideCurrentMark();
 
 	currentMarkPos = val;
 	qreal halfWidth = 0.2;
 	currentMark->setRect(val - halfWidth, 0, 2*halfWidth, data_max);
+
 	graphicsScene->addItem(currentMark);
+	currentMarkVisible = true;
 }
 
 QSize TimePlot::sizeHint() const

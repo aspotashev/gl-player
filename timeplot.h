@@ -22,6 +22,7 @@ protected:
 
 private:
 	void resizeGraphicsViewToFit();
+	void hideCurrentMark();
 
 private:
 	QGraphicsScene *graphicsScene;
@@ -29,6 +30,7 @@ private:
 
 	QGraphicsRectItem *currentMark;
 	int currentMarkPos;
+	bool currentMarkVisible;
 
 	std::vector<float> data;
 	float data_max;

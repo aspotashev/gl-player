@@ -87,6 +87,7 @@ void MainWindow::openFile(const QString &fn)
 	loadFrame(0);
 	timePlot->loadData(fileCutter->loadPressureData());
 	timePlot->moveCurrentMark(0);
+	playbackSlider->setValue(0);
 }
 
 void MainWindow::closeFile()

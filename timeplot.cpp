@@ -107,8 +107,12 @@ QSize TimePlot::sizeHint() const
 void TimePlot::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
-	painter.setPen(Qt::blue);
+	painter.setPen(Qt::red);
 	painter.setBrush(Qt::blue);
 	painter.drawRect(-1000, -1000, 2000, 2000);
+
+	painter.drawLine(
+		leftMargin, height() - bottomMargin,
+		leftMargin, height() - bottomMargin + 10);
 }
 

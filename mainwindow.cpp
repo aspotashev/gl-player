@@ -36,6 +36,7 @@ MainWindow::MainWindow()
 
 	timePlot = new TimePlot();
 	addDockWidget(Qt::BottomDockWidgetArea, timePlot);
+	timePlot->setFeatures(0);
 
 	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
 	connect(playbackSlider, SIGNAL(valueChanged(int)), timePlot, SLOT(moveCurrentMark(int)));

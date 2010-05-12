@@ -18,6 +18,11 @@ public:
 	int a, b;
 
 	Edge(int a, int b);
+
+	bool operator < (const Edge &o) const
+	{
+		return a < o.a ? true : a > o.a ? false : b < o.b;
+	}
 };
 
 class VisFrame
@@ -30,6 +35,8 @@ public:
 	void addEdge(int a, int b);
 	int nEdges() const;
 	const Edge &edge(int i);
+
+	std::vector<Edge> edges();
 private:
 	std::vector<Vertex> v;
 	std::vector<Edge> e;

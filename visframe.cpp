@@ -48,3 +48,8 @@ const Edge &VisFrame::edge(int i)
 	return e[i];
 }
 
+std::vector<Edge> VisFrame::edges()
+{
+	return e;
+}
+

@@ -30,6 +30,7 @@ private:
 	double xRot, yRot, zRot;
 	double zTrans;
 	VisFrame *scene;
+	VisFrame *initialScene;
 
 	QPoint clickPoint;
 };

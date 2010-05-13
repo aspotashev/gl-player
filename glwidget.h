@@ -13,6 +13,9 @@ public:
 
 	void setVisFrame(VisFrame *f);
 
+public slots:
+	void setVisibleBrokenEdges(bool visible);
+
 protected:
 	void initializeGL();
 	void paintBrokenEdges();
@@ -34,5 +37,7 @@ private:
 	VisFrame *initialScene;
 
 	QPoint clickPoint;
+
+	bool visibleBrokenEdges;
 };
 

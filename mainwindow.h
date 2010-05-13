@@ -33,6 +33,7 @@ private:
 
 	QAction *actionStart;
 	QAction *actionFileOpen;
+	QAction *actionVisibleBrokenEdges;
 
 	QString fileName;
 	FileFormat *fileCutter;

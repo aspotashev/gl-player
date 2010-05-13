@@ -27,6 +27,11 @@ MainWindow::MainWindow()
 	mainToolbar->addAction(actionFileOpen);
 	connect(actionFileOpen, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
+	actionVisibleBrokenEdges = new QAction("show broken edges", this);
+	actionVisibleBrokenEdges->setCheckable(true);
+	mainToolbar->addAction(actionVisibleBrokenEdges);
+	connect(actionVisibleBrokenEdges, SIGNAL(toggled(bool)), glWidget, SLOT(setVisibleBrokenEdges(bool)));
+
 	addToolBar(Qt::TopToolBarArea, mainToolbar);
 
 	playbackToolbar = new QToolBar("playback toolbar", this);

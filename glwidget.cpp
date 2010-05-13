@@ -12,6 +12,7 @@ GLWidget::GLWidget(QWidget *parent)
 	zTrans = 0.0;
 	scene = NULL;
 	initialScene = NULL;
+	visibleBrokenEdges = false;
 
 	connect(this, SIGNAL(needsUpdate()),
 		this, SLOT(updateGL()));
@@ -132,7 +133,10 @@ void GLWidget::paintGL()
 	}
 	glEnd();
 
-	paintBrokenEdges();
+	if (visibleBrokenEdges)
+	{
+		paintBrokenEdges();
+	}
 
 	glColor3f(0.2, 0.5, 0.5);
 	glBegin(GL_POLYGON);
@@ -214,6 +218,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 void GLWidget::wheelEvent(QWheelEvent *event)
 {
 	zTrans += event->delta()/100;
+	emit needsUpdate();
+}
+
+void GLWidget::setVisibleBrokenEdges(bool visible)
+{
+	visibleBrokenEdges = visible;
 	emit needsUpdate();
 }
 

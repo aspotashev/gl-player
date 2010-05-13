@@ -15,6 +15,7 @@ public:
 
 protected:
 	void initializeGL();
+	void paintBrokenEdges();
 	void paintGL();
 	void resizeGL(int width, int height);
 	void updateScene();

@@ -34,6 +34,54 @@ void GLWidget::initializeGL()
 	glMaterialf(GL_FRONT, GL_DIFFUSE, 0.5);
 }
 
+void GLWidget::paintBrokenEdges()
+{
+	glColor3f(1.0, 0.0, 0.0);
+	glBegin(GL_LINES);
+	if (initialScene && scene)
+	{
+		std::vector<Edge> a0 = initialScene->edges();
+		std::vector<Edge> b0 = scene->edges();
+		std::set<Edge> a;
+		std::set<Edge> b;
+
+//		std::copy(a0.begin(), a0.end(), a.begin());
+		for (int i = 0; i < (int)a0.size(); i ++)
+		{
+			a.insert(Edge(a0[i].a, a0[i].b));
+		}
+
+//		std::copy(b0.begin(), b0.end(), b.begin());
+		for (int i = 0; i < (int)b0.size(); i ++)
+		{
+			b.insert(Edge(b0[i].a, b0[i].b));
+		}
+
+		std::vector<Edge> brokenEdges;
+		for (std::set<Edge>::iterator i = a.begin();
+			i != a.end();
+			i ++)
+		{
+			if (b.find(*i) == b.end())
+			{
+				brokenEdges.push_back(*i);
+			}
+		}
+
+		for (int i = 0; i < (int)brokenEdges.size(); i ++)
+		{
+			Edge e = brokenEdges[i];
+
+			assert(e.a >= 0 && e.a < scene->nVertices());
+			assert(e.b >= 0 && e.b < scene->nVertices());
+
+			glVertex3f(scene->vertex(e.a).x, scene->vertex(e.a).y, scene->vertex(e.a).z);
+			glVertex3f(scene->vertex(e.b).x, scene->vertex(e.b).y, scene->vertex(e.b).z);
+		}
+	}
+	glEnd();
+}
+
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -84,51 +132,7 @@ void GLWidget::paintGL()
 	}
 	glEnd();
 
-	glColor3f(1.0, 0.0, 0.0);
-	glBegin(GL_LINES);
-	if (initialScene && scene)
-	{
-		std::vector<Edge> a0 = initialScene->edges();
-		std::vector<Edge> b0 = scene->edges();
-		std::set<Edge> a;
-		std::set<Edge> b;
-
-//		std::copy(a0.begin(), a0.end(), a.begin());
-		for (int i = 0; i < (int)a0.size(); i ++)
-		{
-			a.insert(Edge(a0[i].a, a0[i].b));
-		}
-
-//		std::copy(b0.begin(), b0.end(), b.begin());
-		for (int i = 0; i < (int)b0.size(); i ++)
-		{
-			b.insert(Edge(b0[i].a, b0[i].b));
-		}
-
-		std::vector<Edge> brokenEdges;
-		for (std::set<Edge>::iterator i = a.begin();
-			i != a.end();
-			i ++)
-		{
-			if (b.find(*i) == b.end())
-			{
-				brokenEdges.push_back(*i);
-			}
-		}
-
-		for (int i = 0; i < (int)brokenEdges.size(); i ++)
-		{
-			Edge e = brokenEdges[i];
-
-			assert(e.a >= 0 && e.a < s->nVertices());
-			assert(e.b >= 0 && e.b < s->nVertices());
-
-			glVertex3f(s->vertex(e.a).x, s->vertex(e.a).y, s->vertex(e.a).z);
-			glVertex3f(s->vertex(e.b).x, s->vertex(e.b).y, s->vertex(e.b).z);
-		}
-	}
-	glEnd();
-
+	paintBrokenEdges();
 
 	glColor3f(0.2, 0.5, 0.5);
 	glBegin(GL_POLYGON);

@@ -86,7 +86,7 @@ void GLWidget::paintBrokenEdges()
 
 void GLWidget::generateCallList()
 {
-	glNewList(1, GL_COMPILE);
+	glNewList(1, GL_COMPILE_AND_EXECUTE);
 
 
 	glColor3f(1, 1, 1);
@@ -151,12 +151,6 @@ void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//	callListUptodate = false;
-	if (!callListUptodate)
-	{
-		generateCallList();
-		callListUptodate = true;
-	}
 
 	glLoadIdentity();
 	glTranslated(0.0, 0.0, -15.0 + zTrans);
@@ -164,7 +158,16 @@ void GLWidget::paintGL()
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-	glCallList(1);
+	if (!callListUptodate)
+	{
+		generateCallList();
+		callListUptodate = true;
+	}
+	else
+	{
+		glCallList(1);
+	}
+
 
 //	glLoadIdentity();
 //	glTranslated(0.0, 0.0, -5.0);

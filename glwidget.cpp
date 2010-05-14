@@ -8,6 +8,7 @@
 
 GLWidget::GLWidget(QWidget *parent)
 {
+	callListUptodate = false;
 	xRot = yRot = zRot = 0.0;
 	zTrans = 0.0;
 	scene = NULL;
@@ -83,12 +84,22 @@ void GLWidget::paintBrokenEdges()
 	glEnd();
 }
 
-void GLWidget::paintGL()
+void GLWidget::generateCallList()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glNewList(1, GL_COMPILE);
+
+
 	glColor3f(1, 1, 1);
 
 	GLUquadricObj *quad = gluNewQuadric();
+
+
+	glLoadIdentity();
+
+	glTranslated(0.0, 0.0, -15.0 + zTrans);
+	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
 
 	VisFrame *s = scene;
@@ -96,16 +107,12 @@ void GLWidget::paintGL()
 	{
 		Vertex v = s->vertex(i);
 
-		glLoadIdentity();
-
-		glTranslated(0.0, 0.0, -15.0 + zTrans);
-		glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-		glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-		glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
+		glPushMatrix();
 
 		glTranslatef(v.x - 4.5, v.y - 4.5, v.z - 4.5);
-
 		gluSphere(quad, v.r, 5, 5);
+
+		glPopMatrix();
 	}
 
 
@@ -147,8 +154,24 @@ void GLWidget::paintGL()
 	glEnd();
 
 
-	glLoadIdentity();
-	glTranslated(0.0, 0.0, -5.0);
+	glEndList();
+}
+
+void GLWidget::paintGL()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	callListUptodate = false;
+	if (!callListUptodate)
+	{
+		generateCallList();
+		callListUptodate = true;
+	}
+
+	glCallList(1);
+
+//	glLoadIdentity();
+//	glTranslated(0.0, 0.0, -5.0);
 
 //	glLineWidth(2.0);
 //	glRectd(-2.0, -2.0, 2.0, 2.0);

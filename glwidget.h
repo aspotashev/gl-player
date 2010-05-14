@@ -27,6 +27,9 @@ protected:
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void wheelEvent(QWheelEvent *event);
 
+private:
+	void generateCallList();
+
 signals:
 	void needsUpdate();
 
@@ -39,5 +42,6 @@ private:
 	QPoint clickPoint;
 
 	bool visibleBrokenEdges;
+	bool callListUptodate;
 };
 

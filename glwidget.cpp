@@ -95,12 +95,12 @@ void GLWidget::generateCallList()
 
 
 	glLoadIdentity();
-
 	glTranslated(0.0, 0.0, -15.0 + zTrans);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
+	glPushMatrix();
 
 	VisFrame *s = scene;
 	for (int i = 0; i < (s ? s->nVertices() : 0); i ++)
@@ -116,12 +116,8 @@ void GLWidget::generateCallList()
 	}
 
 
-	glLoadIdentity();
+	glPopMatrix();
 
-	glTranslated(0.0, 0.0, -15.0 + zTrans);
-	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
 	glTranslatef(-4.5, -4.5, -4.5);
 

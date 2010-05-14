@@ -94,12 +94,6 @@ void GLWidget::generateCallList()
 	GLUquadricObj *quad = gluNewQuadric();
 
 
-	glLoadIdentity();
-	glTranslated(0.0, 0.0, -15.0 + zTrans);
-	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
-	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
-	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
-
 	glPushMatrix();
 
 	VisFrame *s = scene;
@@ -157,12 +151,18 @@ void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	callListUptodate = false;
+//	callListUptodate = false;
 	if (!callListUptodate)
 	{
 		generateCallList();
 		callListUptodate = true;
 	}
+
+	glLoadIdentity();
+	glTranslated(0.0, 0.0, -15.0 + zTrans);
+	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
+	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
+	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
 	glCallList(1);
 
@@ -207,6 +207,7 @@ void GLWidget::setVisFrame(VisFrame *f)
 	scene = f;
 
 //	updateScene();
+	callListUptodate = false;
 	emit needsUpdate();
 }
 
@@ -243,6 +244,7 @@ void GLWidget::wheelEvent(QWheelEvent *event)
 void GLWidget::setVisibleBrokenEdges(bool visible)
 {
 	visibleBrokenEdges = visible;
+	callListUptodate = false;
 	emit needsUpdate();
 }
 

@@ -23,7 +23,6 @@ public:
 	void openFile(const QString &fn);
 	void closeFile();
 public slots:
-	void slotStart();
 	void slotFileOpen();
 	void slotGotoFrame(int index);
 private:
@@ -31,7 +30,6 @@ private:
 	QToolBar *mainToolbar;
 	QToolBar *playbackToolbar;
 
-	QAction *actionStart;
 	QAction *actionFileOpen;
 	QAction *actionVisibleBrokenEdges;
 

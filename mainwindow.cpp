@@ -19,10 +19,6 @@ MainWindow::MainWindow()
 
 	mainToolbar = new QToolBar("main toolbar", this);
 
-	actionStart = new QAction("start", this);
-	mainToolbar->addAction(actionStart);
-	connect(actionStart, SIGNAL(triggered()), this, SLOT(slotStart()));
-
 	actionFileOpen = new QAction("open", this);
 	mainToolbar->addAction(actionFileOpen);
 	connect(actionFileOpen, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
@@ -55,10 +51,6 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 	case Qt::Key_Right: glWidget->rotateY( 100); break;
 	default: break;
 	}
-}
-
-void MainWindow::slotStart() {
-	printf("start\n");
 }
 
 void MainWindow::loadScene(VisFrame *f)

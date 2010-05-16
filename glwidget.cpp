@@ -10,7 +10,7 @@ GLWidget::GLWidget(QWidget *parent)
 {
 	callListUptodate = false;
 	xRot = yRot = zRot = 0.0;
-	zTrans = 0.0;
+	zTrans = -15.0;
 	scene = NULL;
 	initialScene = NULL;
 	visibleBrokenEdges = false;
@@ -153,7 +153,7 @@ void GLWidget::paintGL()
 
 
 	glLoadIdentity();
-	glTranslated(0.0, 0.0, -15.0 + zTrans);
+	glTranslated(0.0, 0.0, zTrans);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);

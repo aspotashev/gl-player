@@ -10,6 +10,7 @@ GLWidget::GLWidget(QWidget *parent)
 {
 	callListUptodate = false;
 	xRot = yRot = zRot = 0.0;
+	xTrans = yTrans = 0.0;
 	zTrans = -15.0;
 	scene = NULL;
 	initialScene = NULL;
@@ -153,7 +154,7 @@ void GLWidget::paintGL()
 
 
 	glLoadIdentity();
-	glTranslated(0.0, 0.0, zTrans);
+	glTranslated(xTrans, yTrans, zTrans);
 	glRotated(xRot / 16.0, 1.0, 0.0, 0.0);
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
@@ -200,6 +201,13 @@ void GLWidget::rotateY(double dy)
 //	updateGL();
 }
 
+void GLWidget::translateXY(double dx, double dy)
+{
+	xTrans += dx;
+	yTrans += dy;
+	emit needsUpdate();
+}
+
 void GLWidget::setVisFrame(VisFrame *f)
 {
 	if (!initialScene)
@@ -225,7 +233,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		clickPoint = event->pos();
+		clickPointL = event->pos();
+	}
+
+	if (event->buttons() == Qt::RightButton)
+	{
+		clickPointR = event->pos();
 	}
 }
 
@@ -233,8 +246,16 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	if (event->buttons() == Qt::LeftButton)
 	{
-		rotateY(2.5*(event->x() - clickPoint.x()));
-		clickPoint = event->pos();
+		rotateY(2.5*(event->x() - clickPointL.x()));
+		clickPointL = event->pos();
+	}
+
+	if (event->buttons() == Qt::RightButton)
+	{
+		translateXY(
+			0.01 *(event->x() - clickPointR.x()),
+			-0.01*(event->y() - clickPointR.y()));
+		clickPointR = event->pos();
 	}
 }
 

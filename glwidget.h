@@ -10,6 +10,7 @@ public:
 	~GLWidget();
 
 	void rotateY(double dy);
+	void translateXY(double dx, double dy);
 
 	void setVisFrame(VisFrame *f);
 
@@ -35,11 +36,12 @@ signals:
 
 private:
 	double xRot, yRot, zRot;
-	double zTrans;
+	double xTrans, yTrans, zTrans;
 	VisFrame *scene;
 	VisFrame *initialScene;
 
-	QPoint clickPoint;
+	QPoint clickPointL; // left button
+	QPoint clickPointR; // right button
 
 	bool visibleBrokenEdges;
 	bool callListUptodate;

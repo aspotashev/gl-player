@@ -198,7 +198,6 @@ void GLWidget::rotateY(double dy)
 {
 	yRot += dy;
 	emit needsUpdate();
-//	updateGL();
 }
 
 void GLWidget::translateXY(double dx, double dy)
@@ -217,16 +216,8 @@ void GLWidget::setVisFrame(VisFrame *f)
 
 	scene = f;
 
-//	updateScene();
 	callListUptodate = false;
 	emit needsUpdate();
-}
-
-void GLWidget::updateScene()
-{
-	// rebuild call lists here
-	updateGL();
-
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)

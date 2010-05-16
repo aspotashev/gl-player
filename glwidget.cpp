@@ -8,7 +8,9 @@
 
 GLWidget::GLWidget(QWidget *parent)
 {
+	enableCalllist = false;
 	callListUptodate = false;
+
 	xRot = yRot = zRot = 0.0;
 	xTrans = yTrans = 0.0;
 	zTrans = -15.0;
@@ -87,7 +89,10 @@ void GLWidget::paintBrokenEdges()
 
 void GLWidget::generateCallList()
 {
-	glNewList(1, GL_COMPILE_AND_EXECUTE);
+	if (enableCalllist)
+	{
+		glNewList(1, GL_COMPILE_AND_EXECUTE);
+	}
 
 
 	glColor3f(1, 1, 1);
@@ -145,11 +150,17 @@ void GLWidget::generateCallList()
 	glEnd();
 
 
-	glEndList();
+	if (enableCalllist)
+	{
+		glEndList();
+	}
 }
 
 void GLWidget::paintGL()
 {
+	clock_t start_time = clock();
+
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -159,7 +170,7 @@ void GLWidget::paintGL()
 	glRotated(yRot / 16.0, 0.0, 1.0, 0.0);
 	glRotated(zRot / 16.0, 0.0, 0.0, 1.0);
 
-	if (!callListUptodate)
+	if (!callListUptodate || !enableCalllist)
 	{
 		generateCallList();
 		callListUptodate = true;
@@ -176,6 +187,10 @@ void GLWidget::paintGL()
 //	glLineWidth(2.0);
 //	glRectd(-2.0, -2.0, 2.0, 2.0);
 //	glutWireCube(1.0);
+
+
+	int ticks = (int)(clock() - start_time);
+	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
 }
 
 void GLWidget::resizeGL(int width, int height)

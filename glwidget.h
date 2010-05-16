@@ -43,6 +43,7 @@ private:
 	QPoint clickPointR; // right button
 
 	bool visibleBrokenEdges;
+	bool enableCalllist;
 	bool callListUptodate;
 };
 

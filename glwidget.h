@@ -20,7 +20,8 @@ public slots:
 protected:
 	void initializeGL();
 	void paintBrokenEdges();
-	void paintGL();
+	void paintEvent(QPaintEvent *event);
+	void showEvent(QShowEvent *event);
 	void resizeGL(int width, int height);
 
 	virtual void mouseMoveEvent(QMouseEvent *event);

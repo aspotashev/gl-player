@@ -7,7 +7,8 @@
 #include "glwidget.h"
 #include "visframe.h"
 
-GLWidget::GLWidget(QWidget *parent)
+GLWidget::GLWidget(QWidget *parent):
+	QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
 	enableCalllist = false;
 	callListUptodate = false;
@@ -19,8 +20,12 @@ GLWidget::GLWidget(QWidget *parent)
 	initialScene = NULL;
 	visibleBrokenEdges = false;
 
+	setAutoFillBackground(false);
+
 	connect(this, SIGNAL(needsUpdate()),
 		this, SLOT(updateGL()));
+	connect(this, SIGNAL(needsUpdate()),
+		this, SLOT(update()));
 }
 
 GLWidget::~GLWidget()
@@ -29,6 +34,10 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
+	return;
+
+	glEnable(GL_MULTISAMPLE);
+
 	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
 	glClearColor(0.3, 0.3, 0.5, 0);
 	glShadeModel(GL_FLAT);
@@ -157,9 +166,13 @@ void GLWidget::generateCallList()
 	}
 }
 
-void GLWidget::paintGL()
+void GLWidget::paintEvent(QPaintEvent *event)
 {
 	clock_t start_time = clock();
+
+
+	resizeGL(width(), height());
+//	setupViewport(width(), height());
 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -192,10 +205,27 @@ void GLWidget::paintGL()
 
 	int ticks = (int)(clock() - start_time);
 	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
+
+
+	QPainter painter(this);
+//	painter.drawText(0, 0, 100, 100, Qt::AlignCenter | Qt::TextWordWrap, "Hello");
+	painter.end();
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
+	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
+//	glClearColor(0.3, 0.3, 0.5, 0);
+	glShadeModel(GL_FLAT);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+//	glEnable(GL_LIGHTING);
+//	glEnable(GL_LIGHT0);
+	glEnable(GL_MULTISAMPLE);
+	glEnable(GL_COLOR_MATERIAL);
+	glMaterialf(GL_FRONT, GL_DIFFUSE, 0.5);
+
+//-------------------
 	glViewport(0, 0, width, height);
 
 
@@ -277,5 +307,9 @@ void GLWidget::setVisibleBrokenEdges(bool visible)
 	visibleBrokenEdges = visible;
 	callListUptodate = false;
 	emit needsUpdate();
+}
+
+void GLWidget::showEvent(QShowEvent *event)
+{
 }
 

@@ -14,8 +14,9 @@ MainWindow::MainWindow()
 
 	fileCutter = NULL;
 
-	glWidget = new GLWidget;
+	glWidget = new GLWidget(this);
 	setCentralWidget(glWidget);
+	glWidget->show();
 
 	mainToolbar = new QToolBar("main toolbar", this);
 

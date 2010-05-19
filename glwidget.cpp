@@ -170,6 +170,8 @@ void GLWidget::paintEvent(QPaintEvent *event)
 {
 	clock_t start_time = clock();
 
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
 
 	resizeGL(width(), height());
 //	setupViewport(width(), height());
@@ -207,8 +209,14 @@ void GLWidget::paintEvent(QPaintEvent *event)
 	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
 
 
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	glPopMatrix();
+
 	QPainter painter(this);
-//	painter.drawText(0, 0, 100, 100, Qt::AlignCenter | Qt::TextWordWrap, "Hello");
+	painter.drawText(0, 0, 100, 100, Qt::AlignCenter | Qt::TextWordWrap, "Hello");
+	painter.setPen(QPen(QColor(255, 0, 0)));
+	painter.drawLine(0, 0, 10, 10);
 	painter.end();
 }
 

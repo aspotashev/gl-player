@@ -209,7 +209,7 @@ void GLWidget::paintEvent(QPaintEvent *event)
 
 
 	int ticks = (int)(clock() - start_time);
-	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
+//	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
 
 
 	glDisable(GL_CULL_FACE);

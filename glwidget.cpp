@@ -6,10 +6,13 @@
 #include <QtGui>
 #include "glwidget.h"
 #include "visframe.h"
+#include "mainwindow.h"
 
 GLWidget::GLWidget(QWidget *parent):
 	QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
+	mainWindow = (MainWindow *)parent;
+
 	enableCalllist = false;
 	callListUptodate = false;
 
@@ -214,9 +217,16 @@ void GLWidget::paintEvent(QPaintEvent *event)
 	glPopMatrix();
 
 	QPainter painter(this);
-	painter.drawText(0, 0, 100, 100, Qt::AlignCenter | Qt::TextWordWrap, "Hello");
+	QColor panelBg(0, 0, 0, 100);
+	QSize panelSize(120, 50);
+
+	painter.setBrush(QBrush(panelBg));
+	painter.setPen(QPen(panelBg));
+	painter.drawRoundedRect(5, 5, panelSize.width(), panelSize.height(), 5, 5);
+
 	painter.setPen(QPen(QColor(255, 0, 0)));
-	painter.drawLine(0, 0, 10, 10);
+	painter.setFont(QFont("sans-serif", 16));
+	painter.drawText(5, 5, 125, 55, Qt::AlignCenter | Qt::TextWordWrap, QString("Frame: %1").arg(mainWindow->frameIndex()));
 	painter.end();
 }
 

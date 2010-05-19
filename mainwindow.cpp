@@ -10,6 +10,8 @@
 
 MainWindow::MainWindow()
 {
+	currentFrameIndex = 0;
+
 	resize(500, 500);
 
 	fileCutter = NULL;
@@ -117,6 +119,8 @@ void MainWindow::loadFrame(int index)
 		return;
 	}
 
+	currentFrameIndex = index;
+
 	std::vector<VertexStruct> v;
 	std::vector<EdgeStruct> e;
 	fileCutter->readFrame(index, v, e);
@@ -153,5 +157,10 @@ void MainWindow::loadNextFrame()
 void MainWindow::slotGotoFrame(int index)
 {
 	loadFrame(index);
+}
+
+int MainWindow::frameIndex() const
+{
+	return currentFrameIndex;
 }
 

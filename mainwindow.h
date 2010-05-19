@@ -19,6 +19,7 @@ public:
 	void loadScene(VisFrame *f);
 	void rotateY(double dy);
 	void loadFrame(int index);
+	int frameIndex() const;
 	void loadNextFrame();
 	void openFile(const QString &fn);
 	void closeFile();

@@ -1,6 +1,10 @@
+#ifndef __GLWIDGET_H__
+#define __GLWIDGET_H__
+
 #include <QGLWidget>
 
 class VisFrame;
+class MainWindow;
 
 class GLWidget : public QGLWidget
 {
@@ -35,6 +39,8 @@ signals:
 	void needsUpdate();
 
 private:
+	MainWindow *mainWindow;
+
 	double xRot, yRot, zRot;
 	double xTrans, yTrans, zTrans;
 	VisFrame *scene;
@@ -48,3 +54,4 @@ private:
 	bool callListUptodate;
 };
 
+#endif

@@ -37,13 +37,16 @@ void TimePlot::loadData(std::vector<float> data)
 		data_max = std::max(data_max, data[i]);
 	}
 
+	graphicsView->translate(0, data_max);
+	graphicsView->scale(1, -1);
+
 	hideCurrentMark(); // remove (but not delete) the mark
 	graphicsScene->clear(); // remove & delete all items from the scene
 	for (int i = 0; i < (int)data.size() - 1; i ++)
 	{
 		graphicsScene->addLine(
-			i,     data_max - data[i],
-			i + 1, data_max - data[i + 1]); // hack, we should rather
+			i,     data[i],
+			i + 1, data[i + 1]); // hack, we should rather
 							// reverse the coordinate system
 	}
 
@@ -137,7 +140,7 @@ void TimePlot::configureGrid()
 		xGridList.push_back(i);
 		xGrid.push_back(graphicsScene->addLine(
 			i, 0, i, data_max,
-			QPen(QColor(200, 200, 200))));
+			QPen(QColor(100, 100, 100, 100))));
 	}
 
 // y-axis
@@ -169,7 +172,7 @@ void TimePlot::paintEvent(QPaintEvent *event)
 	for (int i = 0; i < (int)xGridList.size(); i ++)
 	{
 		qreal vx = xGridList[i];
-		int x = graphicsView->mapFromScene(vx / 1.5, 0).x() + leftMargin - 6;
+		int x = graphicsView->mapFromScene(vx / 1.5, 0).x() + leftMargin - 16;
 
 		painter.drawText(
 			QRectF(x, height() - bottomMargin, x, height() - bottomMargin),
@@ -180,13 +183,12 @@ void TimePlot::paintEvent(QPaintEvent *event)
 	for (int i = 0; i < (int)yGridList.size(); i ++)
 	{
 		qreal vy = yGridList[i];
-		int y = graphicsView->mapFromScene(0, vy / 1.5).y() + topMargin;
-		printf("y = %d\n", y);
+		int y = graphicsView->mapFromScene(0, data_max - (data_max - vy) / 1.5).y() + topMargin - 3;
 
 		painter.drawText(
-			QRectF(0, y, leftMargin, y),
+			QRectF(0, y, leftMargin - 3, y),
 			Qt::AlignRight | Qt::AlignVCenter | Qt::TextDontClip,
-			QString("%1qq").arg(vy));
+			QString("%1").arg(vy));
 	}
 }
 

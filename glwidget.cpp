@@ -8,6 +8,10 @@
 #include "visframe.h"
 #include "mainwindow.h"
 
+#ifndef GL_MULTISAMPLE
+#define GL_MULTISAMPLE 0x809D
+#endif
+
 GLWidget::GLWidget(QWidget *parent):
 	QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {

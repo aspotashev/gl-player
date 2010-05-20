@@ -180,6 +180,9 @@ void GLWidget::paintEvent(QPaintEvent *event)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
+	glDisable(GL_LINE_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+
 	resizeGL(width(), height());
 //	setupViewport(width(), height());
 
@@ -221,6 +224,8 @@ void GLWidget::paintEvent(QPaintEvent *event)
 	glPopMatrix();
 
 	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing, false);
+
 	QColor panelBg(0, 0, 0, 100);
 	QSize panelSize(120, 50);
 

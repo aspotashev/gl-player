@@ -13,7 +13,7 @@
 #endif
 
 GLWidget::GLWidget(QWidget *parent):
-	QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+	QGLWidget(parent)
 {
 	mainWindow = (MainWindow *)parent;
 

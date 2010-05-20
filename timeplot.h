@@ -11,6 +11,8 @@ public:
 	void loadData(std::vector<float> data);
 	void clear();
 
+	void resizeGraphicsViewToFit();
+
 public slots:
 	void moveCurrentMark(int val);
 
@@ -21,7 +23,6 @@ protected:
 	virtual void paintEvent(QPaintEvent *event);
 
 private:
-	void resizeGraphicsViewToFit();
 	void hideCurrentMark();
 	void configureGrid();
 
@@ -42,5 +43,8 @@ private:
 	int bottomMargin;
 
 	std::vector<QGraphicsLineItem *> xGrid;
+	std::vector<QGraphicsLineItem *> yGrid;
+	std::vector<qreal> xGridList;
+	std::vector<qreal> yGridList;
 };
 

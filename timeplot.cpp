@@ -16,10 +16,10 @@ TimePlot::TimePlot(QWidget *parent):
 	currentMark = NULL;
 	currentMarkVisible = false;
 
-	leftMargin = 10;
+	leftMargin = 40;
 	topMargin = 0;
 	rightMargin = 0;
-	bottomMargin = 10;
+	bottomMargin = 20;
 }
 
 TimePlot::~TimePlot()
@@ -123,6 +123,7 @@ QSize TimePlot::sizeHint() const
 
 void TimePlot::configureGrid()
 {
+// x-axis
 	for (int i = 0; i < (int)xGrid.size(); i ++)
 	{
 		graphicsScene->removeItem(xGrid[i]);
@@ -130,28 +131,62 @@ void TimePlot::configureGrid()
 	}
 	xGrid.clear();
 
-	for (int i = 0; i < data.size(); i += 10)
+	xGridList.clear();
+	for (int i = 0; i < data.size(); i += 50)
 	{
+		xGridList.push_back(i);
 		xGrid.push_back(graphicsScene->addLine(
 			i, 0, i, data_max,
 			QPen(QColor(200, 200, 200))));
 	}
+
+// y-axis
+	for (int i = 0; i < (int)yGrid.size(); i ++)
+	{
+		graphicsScene->removeItem(yGrid[i]);
+		delete yGrid[i];
+	}
+	yGrid.clear();
+
+	yGridList.clear();
+	for (int i = 0; i < data_max; i += 1)
+	{
+		yGridList.push_back(i);
+		yGrid.push_back(graphicsScene->addLine(
+			0, i, data.size() - 1, i,
+			QPen(QColor(200, 200, 200))));
+	}
+
+	update();
 }
 
 void TimePlot::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
 
-//	painter.setBrush(Qt::blue);
-//	painter.drawRect(-1000, -1000, 2000, 2000);
-
 	painter.setPen(Qt::red);
 
-	int xx = graphicsView->mapFromScene(0, 0).x();
-	printf("x = %d\n", xx);
+	for (int i = 0; i < (int)xGridList.size(); i ++)
+	{
+		qreal vx = xGridList[i];
+		int x = graphicsView->mapFromScene(vx / 1.5, 0).x() + leftMargin - 6;
 
-	painter.drawLine(
-		leftMargin - 3 + xx, height() - bottomMargin,
-		leftMargin - 3 + xx, height() - bottomMargin + 10);
+		painter.drawText(
+			QRectF(x, height() - bottomMargin, x, height() - bottomMargin),
+			Qt::AlignTop | Qt::AlignHCenter | Qt::TextDontClip,
+			QString("%1").arg(vx));
+	}
+
+	for (int i = 0; i < (int)yGridList.size(); i ++)
+	{
+		qreal vy = yGridList[i];
+		int y = graphicsView->mapFromScene(0, vy / 1.5).y() + topMargin;
+		printf("y = %d\n", y);
+
+		painter.drawText(
+			QRectF(0, y, leftMargin, y),
+			Qt::AlignRight | Qt::AlignVCenter | Qt::TextDontClip,
+			QString("%1qq").arg(vy));
+	}
 }
 

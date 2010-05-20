@@ -23,6 +23,7 @@ protected:
 private:
 	void resizeGraphicsViewToFit();
 	void hideCurrentMark();
+	void configureGrid();
 
 private:
 	QGraphicsScene *graphicsScene;
@@ -39,5 +40,7 @@ private:
 	int topMargin;
 	int rightMargin;
 	int bottomMargin;
+
+	std::vector<QGraphicsLineItem *> xGrid;
 };
 

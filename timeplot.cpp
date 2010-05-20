@@ -77,6 +77,8 @@ void TimePlot::resizeGraphicsViewToFit()
 		height() + 6 - topMargin - bottomMargin);
 
 	graphicsView->fitInView(0, 0, data.size() - 1, data_max);
+
+	configureGrid();
 }
 
 void TimePlot::hideCurrentMark()
@@ -117,6 +119,23 @@ void TimePlot::moveCurrentMark(int val)
 QSize TimePlot::sizeHint() const
 {
 	return QSize(500, 100);
+}
+
+void TimePlot::configureGrid()
+{
+	for (int i = 0; i < (int)xGrid.size(); i ++)
+	{
+		graphicsScene->removeItem(xGrid[i]);
+		delete xGrid[i];
+	}
+	xGrid.clear();
+
+	for (int i = 0; i < data.size(); i += 10)
+	{
+		xGrid.push_back(graphicsScene->addLine(
+			i, 0, i, data_max,
+			QPen(QColor(200, 200, 200))));
+	}
 }
 
 void TimePlot::paintEvent(QPaintEvent *event)

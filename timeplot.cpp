@@ -122,12 +122,17 @@ QSize TimePlot::sizeHint() const
 void TimePlot::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
+
+//	painter.setBrush(Qt::blue);
+//	painter.drawRect(-1000, -1000, 2000, 2000);
+
 	painter.setPen(Qt::red);
-	painter.setBrush(Qt::blue);
-	painter.drawRect(-1000, -1000, 2000, 2000);
+
+	int xx = graphicsView->mapFromScene(0, 0).x();
+	printf("x = %d\n", xx);
 
 	painter.drawLine(
-		leftMargin, height() - bottomMargin,
-		leftMargin, height() - bottomMargin + 10);
+		leftMargin - 3 + xx, height() - bottomMargin,
+		leftMargin - 3 + xx, height() - bottomMargin + 10);
 }
 

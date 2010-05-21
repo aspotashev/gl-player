@@ -85,6 +85,7 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 	case Qt::Key_Right: glWidget->rotateY( 100); break;
 	case Qt::Key_P:     enablePlaybackButtons(!isPlaybackButtonVisible()); break;
 	case Qt::Key_L:     enablePlaybackSlider(!isPlaybackSliderVisible()); break;
+	case Qt::Key_H:     (new QMessageBox(QMessageBox::Critical, "Info", "Visualizer"))->show(); break;
 	default: break;
 	}
 }
@@ -131,6 +132,7 @@ void MainWindow::openFile(const QString &fn)
 
 		timePlot->setZeroFrame(firstLineArgs[0].toInt());
 		timePlot->setEpsilonCoeff(firstLineArgs[1].toFloat());
+		timePlot->resizeGraphicsViewToFit();
 
 		fileComment = in.readAll();
 		commentDock->setText(fileComment);
@@ -139,6 +141,7 @@ void MainWindow::openFile(const QString &fn)
 	{
 		timePlot->setZeroFrame(0);
 		timePlot->setEpsilonCoeff(1.0);
+		timePlot->resizeGraphicsViewToFit();
 
 		fileComment = "<no file opened>";
 		commentDock->setText(fileComment);

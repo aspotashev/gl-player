@@ -161,8 +161,7 @@ void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qrea
 
 qreal TimePlot::mapFrameToX(int i)
 {
-	return i;
-//	return (i - zeroFrame); // * epsilonCoeff;
+	return (i - zeroFrame); // * epsilonCoeff;
 }
 
 void TimePlot::configureGrid()

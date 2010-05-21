@@ -1,4 +1,5 @@
 #include <QMainWindow>
+#include <QTimer>
 #include "glwidget.h"
 
 class VisFrame;
@@ -26,13 +27,26 @@ public:
 public slots:
 	void slotFileOpen();
 	void slotGotoFrame(int index);
+	void slotPlaybackStart();
+	void slotPlaybackPause();
+	void slotPlaybackNextFrame();
 private:
+	bool isLastFrame() const;
+	void enablePlaybackButtons(bool enable);
+	bool isPlaybackButtonVisible();
+	void enablePlaybackSlider(bool enable);
+	bool isPlaybackSliderVisible();
+
+
+
 	GLWidget *glWidget;
 	QToolBar *mainToolbar;
 	QToolBar *playbackToolbar;
 
 	QAction *actionFileOpen;
 	QAction *actionVisibleBrokenEdges;
+	QAction *actionPlaybackStart;
+	QAction *actionPlaybackPause;
 
 	QString fileName;
 	FileFormat *fileCutter;
@@ -40,6 +54,9 @@ private:
 	int currentFrameIndex;
 
 	PlaybackSlider *playbackSlider;
+	QAction *playbackSliderAction;
 	TimePlot *timePlot;
+
+	QTimer playbackTimer;
 };
 

@@ -20,6 +20,8 @@ MainWindow::MainWindow()
 	setCentralWidget(glWidget);
 	glWidget->show();
 
+//-------------------------------------
+
 	mainToolbar = new QToolBar("main toolbar", this);
 	mainToolbar->setIconSize(QSize(22, 22));
 
@@ -34,9 +36,20 @@ MainWindow::MainWindow()
 
 	addToolBar(Qt::TopToolBarArea, mainToolbar);
 
+//-------------------------------------
+
 	playbackToolbar = new QToolBar("playback toolbar", this);
+
+	actionPlaybackStart = new QAction(QIcon(":/images/media-playback-start.png"), "Play", this);
+	playbackToolbar->addAction(actionPlaybackStart);
+	connect(actionPlaybackStart, SIGNAL(triggered()), this, SLOT(slotPlaybackStart()));
+
+	actionPlaybackPause = new QAction(QIcon(":/images/media-playback-pause.png"), "Pause", this);
+	playbackToolbar->addAction(actionPlaybackPause);
+	connect(actionPlaybackPause, SIGNAL(triggered()), this, SLOT(slotPlaybackPause()));
+
 	playbackSlider = new PlaybackSlider(playbackToolbar);
-	playbackToolbar->addWidget(playbackSlider);
+	playbackSliderAction = playbackToolbar->addWidget(playbackSlider);
 	addToolBar(Qt::BottomToolBarArea, playbackToolbar);
 
 	timePlot = new TimePlot();
@@ -45,6 +58,13 @@ MainWindow::MainWindow()
 
 	connect(playbackSlider, SIGNAL(valueChanged(int)), this, SLOT(slotGotoFrame(int)));
 	connect(playbackSlider, SIGNAL(valueChanged(int)), timePlot, SLOT(moveCurrentMark(int)));
+
+	actionPlaybackStart->setVisible(false);
+	actionPlaybackPause->setVisible(false);
+
+//-------------------------------
+
+	connect(&playbackTimer, SIGNAL(timeout()), this, SLOT(slotPlaybackNextFrame()));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -53,6 +73,8 @@ void MainWindow::keyPressEvent(QKeyEvent * event)
 	{
 	case Qt::Key_Left:  glWidget->rotateY(-100); break;
 	case Qt::Key_Right: glWidget->rotateY( 100); break;
+	case Qt::Key_P:     enablePlaybackButtons(!isPlaybackButtonVisible()); break;
+	case Qt::Key_L:     enablePlaybackSlider(!isPlaybackSliderVisible()); break;
 	default: break;
 	}
 }
@@ -144,25 +166,62 @@ void MainWindow::loadFrame(int index)
 	loadScene(a);
 }
 
-void MainWindow::loadNextFrame()
+bool MainWindow::isLastFrame() const
 {
-	if (currentFrameIndex < fileCutter->nFrames() - 1)
-	{
-		loadFrame(++currentFrameIndex);
-	}
-	else
-	{
-		assert(0);
-	}
+	return currentFrameIndex >= fileCutter->nFrames() - 1;
 }
 
 void MainWindow::slotGotoFrame(int index)
 {
 	loadFrame(index);
+	playbackSlider->setValue(currentFrameIndex);
 }
 
 int MainWindow::frameIndex() const
 {
 	return currentFrameIndex;
+}
+
+void MainWindow::slotPlaybackStart()
+{
+	playbackTimer.start(50);
+}
+
+void MainWindow::slotPlaybackPause()
+{
+	playbackTimer.stop();
+}
+
+void MainWindow::slotPlaybackNextFrame()
+{
+	if (isLastFrame())
+	{
+		slotPlaybackPause();
+	}
+	else
+	{
+		slotGotoFrame(++currentFrameIndex);
+	}
+}
+
+void MainWindow::enablePlaybackButtons(bool enable)
+{
+	actionPlaybackStart->setVisible(enable);
+	actionPlaybackPause->setVisible(enable);
+}
+
+bool MainWindow::isPlaybackButtonVisible()
+{
+	return actionPlaybackStart->isVisible();
+}
+
+void MainWindow::enablePlaybackSlider(bool enable)
+{
+	playbackSliderAction->setVisible(enable);
+}
+
+bool MainWindow::isPlaybackSliderVisible()
+{
+	return playbackSliderAction->isVisible();
 }
 

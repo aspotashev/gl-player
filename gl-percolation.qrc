@@ -2,5 +2,7 @@
 <qresource>
 	<file>images/document-open.png</file>
 	<file>images/insert-link.png</file>
+	<file>images/media-playback-start.png</file>
+	<file>images/media-playback-pause.png</file>
 </qresource>
 </RCC>

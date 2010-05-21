@@ -4,14 +4,14 @@
 CommentDock::CommentDock(QWidget *parent):
 	QDockWidget(parent)
 {
-	widget = new QTextEdit(this);
+	widget = new QLabel(this);
 	widget->show();
 
-	widget->setReadOnly(true);
+//	widget->setReadOnly(true);
 }
 
 void CommentDock::setText(QString s)
 {
-	widget->setPlainText(s);
+	widget->setText(s);
 }
 

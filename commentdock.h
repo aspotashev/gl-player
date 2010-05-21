@@ -1,5 +1,6 @@
 #include <QDockWidget>
 #include <QTextEdit>
+#include <QLabel>
 
 class CommentDock : public QDockWidget
 {
@@ -9,6 +10,6 @@ public:
 	void setText(QString s);
 
 private:
-	QTextEdit *widget;
+	QLabel *widget;
 };
 

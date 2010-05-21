@@ -33,6 +33,18 @@ void TimePlot::loadData(std::vector<float> data)
 {
 	this->data = data;
 
+//-----------------------
+	data_max = 0;
+
+	if (currentMark)
+	{
+		delete currentMark;
+	}
+	currentMark = NULL;
+	currentMarkVisible = false;
+//-----------------------
+
+
 	// check that all points >= 0, calculate maximum
 	for (int i = 0; i < (int)data.size(); i ++)
 	{

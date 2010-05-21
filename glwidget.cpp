@@ -169,6 +169,8 @@ void GLWidget::generateCallList()
 
 void GLWidget::paintGL()
 {
+	printf("paintGL\n");
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -227,6 +229,8 @@ void GLWidget::paintEvent(QPaintEvent *event)
 
 void GLWidget::resizeGL(int width, int height)
 {
+	printf("123\n");
+
 	glViewport(0, 0, width, height);
 
 
@@ -308,9 +312,5 @@ void GLWidget::setVisibleBrokenEdges(bool visible)
 	visibleBrokenEdges = visible;
 	callListUptodate = false;
 	emit needsUpdate();
-}
-
-void GLWidget::showEvent(QShowEvent *event)
-{
 }
 

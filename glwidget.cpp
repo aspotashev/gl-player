@@ -41,8 +41,6 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
-	glEnable(GL_MULTISAMPLE);
-
 	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
 	glClearColor(0.3, 0.3, 0.5, 0);
 	glShadeModel(GL_FLAT);

@@ -31,8 +31,6 @@ GLWidget::GLWidget(QWidget *parent):
 
 	connect(this, SIGNAL(needsUpdate()),
 		this, SLOT(updateGL()));
-	connect(this, SIGNAL(needsUpdate()),
-		this, SLOT(update()));
 }
 
 GLWidget::~GLWidget()
@@ -171,13 +169,6 @@ void GLWidget::generateCallList()
 
 void GLWidget::paintGL()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	resizeGL(width(), height());
-//	setupViewport(width(), height());
-
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -206,11 +197,6 @@ void GLWidget::paintGL()
 //	glutWireCube(1.0);
 
 
-
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glPopMatrix();
 }
 
 void GLWidget::paintEvent(QPaintEvent *event)

@@ -65,6 +65,10 @@ MainWindow::MainWindow()
 //-------------------------------
 
 	connect(&playbackTimer, SIGNAL(timeout()), this, SLOT(slotPlaybackNextFrame()));
+
+//-------------------------------
+
+	setStatusBar(new QStatusBar());
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -107,11 +111,10 @@ void MainWindow::openFile(const QString &fn)
 
 	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
 	currentFrameIndex = 0;
-	loadFrame(0);
+	slotGotoFrame(0);
 	timePlot->loadData(fileCutter->loadPressureData());
 	timePlot->moveCurrentMark(0);
 	timePlot->resizeGraphicsViewToFit();
-	playbackSlider->setValue(0);
 }
 
 void MainWindow::closeFile()
@@ -175,6 +178,7 @@ void MainWindow::slotGotoFrame(int index)
 {
 	loadFrame(index);
 	playbackSlider->setValue(currentFrameIndex);
+	statusBar()->showMessage(QString("Frame: %1").arg(currentFrameIndex));
 }
 
 int MainWindow::frameIndex() const

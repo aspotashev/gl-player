@@ -9,7 +9,7 @@ CommentDock::CommentDock(QWidget *parent):
 
 	setTitleBarWidget(new QWidget(this));
 
-//	widget->setReadOnly(true);
+	widget->setWordWrap(true);
 }
 
 void CommentDock::setText(QString s)

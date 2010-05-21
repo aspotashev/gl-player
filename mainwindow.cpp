@@ -107,22 +107,6 @@ void MainWindow::rotateY(double dy)
 
 void MainWindow::openFile(const QString &fn)
 {
-	if (fileCutter != NULL)
-	{
-		closeFile();
-	}
-
-	fileName = fn;
-	fileCutter = new FileFormat();
-	fileCutter->openFile(fn);
-
-	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
-	currentFrameIndex = 0;
-	slotGotoFrame(0);
-	timePlot->loadData(fileCutter->loadPressureData());
-	timePlot->moveCurrentMark(0);
-	timePlot->resizeGraphicsViewToFit();
-
 	QFile file(fn + ".param.txt");
 	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -146,6 +130,24 @@ void MainWindow::openFile(const QString &fn)
 		fileComment = "<no file opened>";
 		commentDock->setText(fileComment);
 	}
+
+//---------------------------
+
+	if (fileCutter != NULL)
+	{
+		closeFile();
+	}
+
+	fileName = fn;
+	fileCutter = new FileFormat();
+	fileCutter->openFile(fn);
+
+	playbackSlider->setRange(0, fileCutter->nFrames() - 1);
+	currentFrameIndex = 0;
+	slotGotoFrame(0);
+	timePlot->loadData(fileCutter->loadPressureData());
+	timePlot->moveCurrentMark(0);
+	timePlot->resizeGraphicsViewToFit();
 }
 
 void MainWindow::closeFile()

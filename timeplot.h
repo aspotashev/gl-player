@@ -25,6 +25,7 @@ protected:
 private:
 	void hideCurrentMark();
 	void configureGrid();
+	std::vector<qreal> buildMarksList(qreal begin, qreal end, int nMax);
 
 private:
 	QGraphicsScene *graphicsScene;

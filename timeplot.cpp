@@ -124,6 +124,13 @@ QSize TimePlot::sizeHint() const
 	return QSize(500, 100);
 }
 
+std::vector<qreal> TimePlot::buildMarksList(qreal begin, qreal end, int nMax)
+{
+	qreal deltaMin = (end - begin) / nMax;
+
+	qreal mantissa = deltaMin / pow10((int)log10(deltaMin));
+}
+
 void TimePlot::configureGrid()
 {
 // x-axis

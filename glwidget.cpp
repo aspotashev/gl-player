@@ -41,8 +41,6 @@ GLWidget::~GLWidget()
 
 void GLWidget::initializeGL()
 {
-	return;
-
 	glEnable(GL_MULTISAMPLE);
 
 	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
@@ -173,10 +171,8 @@ void GLWidget::generateCallList()
 	}
 }
 
-void GLWidget::paintEvent(QPaintEvent *event)
+void GLWidget::paintGL()
 {
-	clock_t start_time = clock();
-
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -212,13 +208,20 @@ void GLWidget::paintEvent(QPaintEvent *event)
 //	glutWireCube(1.0);
 
 
-	int ticks = (int)(clock() - start_time);
-//	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
 
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 	glPopMatrix();
+}
+
+void GLWidget::paintEvent(QPaintEvent *event)
+{
+	return; // disable the crappiest renderer
+
+	clock_t start_time = clock();
+
+	paintGL();
 
 	QPainter painter(this);
 	QColor panelBg(0, 0, 0, 100);
@@ -232,12 +235,16 @@ void GLWidget::paintEvent(QPaintEvent *event)
 	painter.setFont(QFont("sans-serif", 16));
 	painter.drawText(5, 5, 125, 55, Qt::AlignCenter | Qt::TextWordWrap, QString("Frame: %1").arg(mainWindow->frameIndex()));
 	painter.end();
+
+
+	int ticks = (int)(clock() - start_time);
+//	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
 	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
-//	glClearColor(0.3, 0.3, 0.5, 0);
+	glClearColor(0.3, 0.3, 0.5, 0);
 	glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);

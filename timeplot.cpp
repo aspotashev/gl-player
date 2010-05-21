@@ -126,9 +126,11 @@ QSize TimePlot::sizeHint() const
 
 void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qreal> &res)
 {
+	printf("nMax = %d\n", nMax);
+
 	qreal deltaMin = (end - begin) / nMax;
 
-	int power10 = (int)log10(deltaMin);
+	int power10 = (int)log10(deltaMin * 1000000.0) - 6; // hack!
 	qreal mantissa = deltaMin / pow10(power10);
 
 	if (mantissa < 2.0)
@@ -157,6 +159,11 @@ void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qrea
 
 void TimePlot::configureGrid()
 {
+	if (data.size() == 0)
+	{
+		return;
+	}
+
 // x-axis
 	for (int i = 0; i < (int)xGrid.size(); i ++)
 	{
@@ -170,11 +177,6 @@ void TimePlot::configureGrid()
 		0, data.size(),
 		(width() - leftMargin - rightMargin) / 50,
 		xGridList);
-//	xGridList.clear();
-//	for (int i = 0; i < data.size(); i += 50)
-//	{
-//		xGridList.push_back(i);
-//	}
 	for (int i = 0; i < xGridList.size(); i ++)
 	{
 		qreal x = xGridList[i];
@@ -192,10 +194,10 @@ void TimePlot::configureGrid()
 	yGrid.clear();
 
 	yGridList.clear();
-	for (int i = 0; i < data_max; i += 1)
-	{
-		yGridList.push_back(i);
-	}
+	buildMarksList(
+		0, data_max,
+		(height() - topMargin - bottomMargin) / 20,
+		yGridList);
 	for (int i = 0; i < yGridList.size(); i ++)
 	{
 		qreal y = yGridList[i];

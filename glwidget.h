@@ -25,7 +25,7 @@ protected:
 	void initializeGL();
 	void paintGL();
 	void paintBrokenEdges();
-	void paintEvent(QPaintEvent *event);
+//	void paintEvent(QPaintEvent *event);
 	void resizeGL(int width, int height);
 
 	virtual void mouseMoveEvent(QMouseEvent *event);

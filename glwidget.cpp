@@ -169,8 +169,6 @@ void GLWidget::generateCallList()
 
 void GLWidget::paintGL()
 {
-	printf("paintGL\n");
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -201,7 +199,7 @@ void GLWidget::paintGL()
 
 }
 
-void GLWidget::paintEvent(QPaintEvent *event)
+/*void GLWidget::paintEvent(QPaintEvent *event)
 {
 	return; // disable the crappiest renderer
 
@@ -225,12 +223,10 @@ void GLWidget::paintEvent(QPaintEvent *event)
 
 	int ticks = (int)(clock() - start_time);
 //	printf("paintGL took %lf seconds\n", ticks, (double)ticks / CLOCKS_PER_SEC);
-}
+}*/
 
 void GLWidget::resizeGL(int width, int height)
 {
-	printf("123\n");
-
 	glViewport(0, 0, width, height);
 
 

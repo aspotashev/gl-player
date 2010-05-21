@@ -145,8 +145,12 @@ void TimePlot::configureGrid()
 	for (int i = 0; i < data.size(); i += 50)
 	{
 		xGridList.push_back(i);
+	}
+	for (int i = 0; i < xGridList.size(); i ++)
+	{
+		qreal x = xGridList[i];
 		xGrid.push_back(graphicsScene->addLine(
-			i, 0, i, data_max,
+			x, 0, x, data_max,
 			QPen(QColor(100, 100, 100, 100))));
 	}
 
@@ -162,8 +166,12 @@ void TimePlot::configureGrid()
 	for (int i = 0; i < data_max; i += 1)
 	{
 		yGridList.push_back(i);
+	}
+	for (int i = 0; i < yGridList.size(); i ++)
+	{
+		qreal y = yGridList[i];
 		yGrid.push_back(graphicsScene->addLine(
-			0, i, data.size() - 1, i,
+			0, y, data.size() - 1, y,
 			QPen(QColor(200, 200, 200))));
 	}
 

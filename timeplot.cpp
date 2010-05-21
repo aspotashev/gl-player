@@ -131,7 +131,7 @@ void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qrea
 	qreal deltaMin = (end - begin) / nMax;
 
 	int power10 = (int)log10(deltaMin * 1000000.0) - 6; // hack!
-	qreal mantissa = deltaMin / pow10(power10);
+	qreal mantissa = deltaMin / pow(10, power10);
 
 	if (mantissa < 2.0)
 	{
@@ -146,7 +146,7 @@ void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qrea
 		mantissa = 10.0;
 	}
 
-	qreal delta = mantissa * pow10(power10);
+	qreal delta = mantissa * pow(10, power10);
 
 	int beginInt = (int)ceil(begin / delta);
 	int endInt = (int)floor(end / delta);

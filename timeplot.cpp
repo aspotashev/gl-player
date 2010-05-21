@@ -18,7 +18,7 @@ TimePlot::TimePlot(QWidget *parent):
 
 	leftMargin = 40;
 	topMargin = 0;
-	rightMargin = 0;
+	rightMargin = 15;
 	bottomMargin = 20;
 }
 
@@ -124,11 +124,35 @@ QSize TimePlot::sizeHint() const
 	return QSize(500, 100);
 }
 
-std::vector<qreal> TimePlot::buildMarksList(qreal begin, qreal end, int nMax)
+void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qreal> &res)
 {
 	qreal deltaMin = (end - begin) / nMax;
 
-	qreal mantissa = deltaMin / pow10((int)log10(deltaMin));
+	int power10 = (int)log10(deltaMin);
+	qreal mantissa = deltaMin / pow10(power10);
+
+	if (mantissa < 2.0)
+	{
+		mantissa = 2.0;
+	}
+	else if (mantissa < 5.0)
+	{
+		mantissa = 5.0;
+	}
+	else
+	{
+		mantissa = 10.0;
+	}
+
+	qreal delta = mantissa * pow10(power10);
+
+	int beginInt = (int)ceil(begin / delta);
+	int endInt = (int)floor(end / delta);
+
+	for (int i = beginInt; i <= endInt; i ++)
+	{
+		res.push_back(i * delta);
+	}
 }
 
 void TimePlot::configureGrid()
@@ -142,10 +166,15 @@ void TimePlot::configureGrid()
 	xGrid.clear();
 
 	xGridList.clear();
-	for (int i = 0; i < data.size(); i += 50)
-	{
-		xGridList.push_back(i);
-	}
+	buildMarksList(
+		0, data.size(),
+		(width() - leftMargin - rightMargin) / 50,
+		xGridList);
+//	xGridList.clear();
+//	for (int i = 0; i < data.size(); i += 50)
+//	{
+//		xGridList.push_back(i);
+//	}
 	for (int i = 0; i < xGridList.size(); i ++)
 	{
 		qreal x = xGridList[i];

@@ -19,3 +19,5 @@ HEADERS += \
 	playbackslider.h     \
 	timeplot.h
 
+RESOURCES = gl-percolation.qrc
+

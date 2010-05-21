@@ -2,3 +2,4 @@
 *.o
 Makefile
 moc_*.cpp
+qrc_gl-percolation.cpp

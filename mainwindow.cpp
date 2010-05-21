@@ -21,12 +21,13 @@ MainWindow::MainWindow()
 	glWidget->show();
 
 	mainToolbar = new QToolBar("main toolbar", this);
+	mainToolbar->setIconSize(QSize(22, 22));
 
-	actionFileOpen = new QAction("open", this);
+	actionFileOpen = new QAction(QIcon(":/images/document-open.png"), "open", this);
 	mainToolbar->addAction(actionFileOpen);
 	connect(actionFileOpen, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
-	actionVisibleBrokenEdges = new QAction("show broken edges", this);
+	actionVisibleBrokenEdges = new QAction(QIcon(":/images/insert-link.png"), "show broken edges", this);
 	actionVisibleBrokenEdges->setCheckable(true);
 	mainToolbar->addAction(actionVisibleBrokenEdges);
 	connect(actionVisibleBrokenEdges, SIGNAL(toggled(bool)), glWidget, SLOT(setVisibleBrokenEdges(bool)));

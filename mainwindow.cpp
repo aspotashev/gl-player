@@ -7,6 +7,7 @@
 #include "visframe.h"
 #include "playbackslider.h"
 #include "timeplot.h"
+#include "commentdock.h"
 
 MainWindow::MainWindow()
 {
@@ -69,6 +70,11 @@ MainWindow::MainWindow()
 //-------------------------------
 
 	setStatusBar(new QStatusBar());
+
+//-------------------------------
+
+	commentDock = new CommentDock;
+	addDockWidget(Qt::RightDockWidgetArea, commentDock);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent * event)
@@ -115,6 +121,28 @@ void MainWindow::openFile(const QString &fn)
 	timePlot->loadData(fileCutter->loadPressureData());
 	timePlot->moveCurrentMark(0);
 	timePlot->resizeGraphicsViewToFit();
+
+	QFile file(fn + ".param.txt");
+	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		QTextStream in(&file);
+		QString firstLine = in.readLine();
+		QStringList firstLineArgs = firstLine.split(" ");
+
+		timePlot->setZeroFrame(firstLineArgs[0].toInt());
+		timePlot->setEpsilonCoeff(firstLineArgs[1].toFloat());
+
+		fileComment = in.readAll();
+		commentDock->setText(fileComment);
+	}
+	else
+	{
+		timePlot->setZeroFrame(0);
+		timePlot->setEpsilonCoeff(1.0);
+
+		fileComment = "<no file opened>";
+		commentDock->setText(fileComment);
+	}
 }
 
 void MainWindow::closeFile()

@@ -6,6 +6,7 @@ class VisFrame;
 class FileFormat;
 class PlaybackSlider;
 class TimePlot;
+class CommentDock;
 
 class MainWindow : public QMainWindow
 {
@@ -58,5 +59,10 @@ private:
 	TimePlot *timePlot;
 
 	QTimer playbackTimer;
+
+	int zeroFrame;
+	QString fileComment;
+
+	CommentDock *commentDock;
 };
 

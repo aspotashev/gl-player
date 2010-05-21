@@ -13,6 +13,9 @@ public:
 
 	void resizeGraphicsViewToFit();
 
+	void setZeroFrame(int i);
+	void setEpsilonCoeff(float x);
+
 public slots:
 	void moveCurrentMark(int val);
 
@@ -47,5 +50,8 @@ private:
 	std::vector<QGraphicsLineItem *> yGrid;
 	std::vector<qreal> xGridList;
 	std::vector<qreal> yGridList;
+
+	int zeroFrame;
+	float epsilonCoeff;
 };
 

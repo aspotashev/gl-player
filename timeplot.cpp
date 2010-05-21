@@ -238,3 +238,13 @@ void TimePlot::paintEvent(QPaintEvent *event)
 	}
 }
 
+void TimePlot::setZeroFrame(int i)
+{
+	zeroFrame = i;
+}
+
+void TimePlot::setEpsilonCoeff(float x)
+{
+	epsilonCoeff = x;
+}
+

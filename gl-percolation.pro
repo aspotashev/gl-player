@@ -9,6 +9,7 @@ SOURCES += \
 	main.cpp             \
 	playbackslider.cpp   \
 	timeplot.cpp         \
+	commentdock.cpp      \
 	fileformat.cpp
 
 HEADERS += \
@@ -17,6 +18,7 @@ HEADERS += \
 	fileformat.h         \
 	visframe.h           \
 	playbackslider.h     \
+	commentdock.h        \
 	timeplot.h
 
 RESOURCES = gl-percolation.qrc

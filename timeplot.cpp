@@ -20,6 +20,9 @@ TimePlot::TimePlot(QWidget *parent):
 	topMargin = 0;
 	rightMargin = 15;
 	bottomMargin = 20;
+
+	zeroFrame = 0;
+	epsilonCoeff = 1.0;
 }
 
 TimePlot::~TimePlot()
@@ -45,12 +48,11 @@ void TimePlot::loadData(std::vector<float> data)
 	for (int i = 0; i < (int)data.size() - 1; i ++)
 	{
 		graphicsScene->addLine(
-			i,     data[i],
-			i + 1, data[i + 1]); // hack, we should rather
-							// reverse the coordinate system
+			mapFrameToX(i),     data[i],
+			mapFrameToX(i + 1), data[i + 1]);
 	}
 
-	graphicsView->setSceneRect(0, 0, data.size() - 1, data_max);
+	graphicsView->setSceneRect(mapFrameToX(0), 0, mapFrameToX(data.size() - 1), data_max);
 
 	resizeGraphicsViewToFit();
 
@@ -79,7 +81,7 @@ void TimePlot::resizeGraphicsViewToFit()
 		width() + 6 - leftMargin - rightMargin,
 		height() + 6 - topMargin - bottomMargin);
 
-	graphicsView->fitInView(0, 0, data.size() - 1, data_max);
+	graphicsView->fitInView(mapFrameToX(0), 0, mapFrameToX(data.size() - 1), data_max);
 
 	configureGrid();
 }
@@ -111,9 +113,9 @@ void TimePlot::moveCurrentMark(int val)
 
 	hideCurrentMark();
 
-	currentMarkPos = val;
-	qreal halfWidth = 0.2;
-	currentMark->setRect(val - halfWidth, 0, 2*halfWidth, data_max);
+	qreal valReal = mapFrameToX(val);
+	qreal halfWidth = 0.2 * epsilonCoeff;
+	currentMark->setRect(valReal - halfWidth, 0, 2*halfWidth, data_max);
 
 	graphicsScene->addItem(currentMark);
 	currentMarkVisible = true;
@@ -157,6 +159,12 @@ void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qrea
 	}
 }
 
+qreal TimePlot::mapFrameToX(int i)
+{
+	return i;
+//	return (i - zeroFrame); // * epsilonCoeff;
+}
+
 void TimePlot::configureGrid()
 {
 	if (data.size() == 0)
@@ -174,7 +182,7 @@ void TimePlot::configureGrid()
 
 	xGridList.clear();
 	buildMarksList(
-		0, data.size(),
+		mapFrameToX(0), mapFrameToX(data.size()),
 		(width() - leftMargin - rightMargin) / 50,
 		xGridList);
 	for (int i = 0; i < xGridList.size(); i ++)
@@ -202,7 +210,7 @@ void TimePlot::configureGrid()
 	{
 		qreal y = yGridList[i];
 		yGrid.push_back(graphicsScene->addLine(
-			0, y, data.size() - 1, y,
+			mapFrameToX(0), y, mapFrameToX(data.size() - 1), y,
 			QPen(QColor(200, 200, 200))));
 	}
 

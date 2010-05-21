@@ -9,6 +9,9 @@ public:
 
 	void setText(QString s);
 
+protected:
+	virtual QSize sizeHint() const;
+
 private:
 	QLabel *widget;
 };

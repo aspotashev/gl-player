@@ -29,13 +29,13 @@ private:
 	void hideCurrentMark();
 	void configureGrid();
 	void buildMarksList(qreal begin, qreal end, int nMax, std::vector<qreal> &res);
+	qreal mapFrameToX(int i);
 
 private:
 	QGraphicsScene *graphicsScene;
 	QGraphicsView *graphicsView;
 
 	QGraphicsRectItem *currentMark;
-	int currentMarkPos;
 	bool currentMarkVisible;
 
 	std::vector<float> data;

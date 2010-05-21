@@ -127,7 +127,7 @@ void MainWindow::openFile(const QString &fn)
 		timePlot->setEpsilonCoeff(1.0);
 		timePlot->resizeGraphicsViewToFit();
 
-		fileComment = "<no file opened>";
+		fileComment = "<no info>";
 		commentDock->setText(fileComment);
 	}
 

@@ -128,8 +128,6 @@ QSize TimePlot::sizeHint() const
 
 void TimePlot::buildMarksList(qreal begin, qreal end, int nMax, std::vector<qreal> &res)
 {
-	printf("nMax = %d\n", nMax);
-
 	qreal deltaMin = (end - begin) / nMax;
 
 	int power10 = (int)log10(deltaMin * 1000000.0) - 6; // hack!

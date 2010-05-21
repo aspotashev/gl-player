@@ -243,18 +243,6 @@ void GLWidget::paintEvent(QPaintEvent *event)
 
 void GLWidget::resizeGL(int width, int height)
 {
-	qglClearColor(QColor::fromCmykF(0.39, 0.39, 0.0, 0.0).dark());
-	glClearColor(0.3, 0.3, 0.5, 0);
-	glShadeModel(GL_FLAT);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-//	glEnable(GL_LIGHTING);
-//	glEnable(GL_LIGHT0);
-	glEnable(GL_MULTISAMPLE);
-	glEnable(GL_COLOR_MATERIAL);
-	glMaterialf(GL_FRONT, GL_DIFFUSE, 0.5);
-
-//-------------------
 	glViewport(0, 0, width, height);
 
 

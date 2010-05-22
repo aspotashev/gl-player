@@ -189,7 +189,6 @@ void TimePlot::configureGrid()
 	for (int i = 0; i < (int)xGrid.size(); i ++)
 	{
 		graphicsScene->removeItem(xGrid[i]);
-		delete xGrid[i];
 	}
 	xGrid.clear();
 
@@ -210,7 +209,6 @@ void TimePlot::configureGrid()
 	for (int i = 0; i < (int)yGrid.size(); i ++)
 	{
 		graphicsScene->removeItem(yGrid[i]);
-		delete yGrid[i];
 	}
 	yGrid.clear();
 

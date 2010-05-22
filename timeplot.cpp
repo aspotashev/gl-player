@@ -5,7 +5,6 @@ TimePlot::TimePlot(QWidget *parent):
 	QDockWidget(parent)
 {
 	data_max = 0;
-	resize(500, 100);
 
 	graphicsScene = new QGraphicsScene();
 

@@ -7,10 +7,7 @@ TimePlot::TimePlot(QWidget *parent):
 	data_max = 0;
 
 	graphicsScene = new QGraphicsScene();
-
-	graphicsView = new QGraphicsView(graphicsScene, this);
-	resizeGraphicsViewToFit();
-	graphicsView->show();
+	graphicsView = NULL; // creates on loadData
 
 	currentMark = NULL;
 	currentMarkVisible = false;
@@ -41,6 +38,23 @@ void TimePlot::loadData(std::vector<float> data)
 	}
 	currentMark = NULL;
 	currentMarkVisible = false;
+
+
+	if (graphicsView)
+	{
+		delete graphicsView;
+		graphicsView = NULL;
+	}
+	graphicsView = new QGraphicsView(graphicsScene, this);
+	graphicsView->show();
+
+
+	xGrid.clear();
+	yGrid.clear();
+	xGridList.clear();
+	yGridList.clear();
+	hideCurrentMark();
+	graphicsScene->clear();
 //-----------------------
 
 
@@ -87,6 +101,11 @@ void TimePlot::mousePressEvent(QMouseEvent *event)
 
 void TimePlot::resizeGraphicsViewToFit()
 {
+	if (!graphicsView)
+	{
+		return;
+	}
+
 	graphicsView->move(-3 + leftMargin, -3 + topMargin);
 	graphicsView->resize(
 		width() + 6 - leftMargin - rightMargin,
